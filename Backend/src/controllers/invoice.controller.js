@@ -1,5 +1,5 @@
 import invoiceModel from "../models/invoice.model.js";
-
+import mongoose from "mongoose";
 
 const createInvoice = async (req, res) => {
     const { invoiceNumber, date, customerId, items } = req.body;
@@ -60,7 +60,6 @@ const getAllInvoices = async (req, res) => {
     }
 };
 
-import mongoose from "mongoose";
 
 const getInvoiceById = async (req, res) => {
     const { id } = req.params;
