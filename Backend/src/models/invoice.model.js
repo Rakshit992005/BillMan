@@ -18,7 +18,6 @@ const itemSchema = new mongoose.Schema({
     },
     totalAmount:{
         type:Number,
-        required:true,
     },
 })
 
@@ -39,7 +38,11 @@ const invoiceSchema = new mongoose.Schema({
     items:[itemSchema],
     totalAmount:{
         type:Number,
-        required:true,
+    },
+    status:{
+        type:String,
+        enum:['pending' , 'paid' , 'quotation'],
+        default:'pending',
     },
     
 },{
