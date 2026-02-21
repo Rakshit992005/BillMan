@@ -31,6 +31,11 @@ const customerSchema = new mongoose.Schema({
     totalAmount:{
         type:Number,
         default:0,
+    },
+    userId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required:true,
     }
 },{
     timestamps:true,

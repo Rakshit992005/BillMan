@@ -13,7 +13,8 @@ const createCustomer = async (req , res) => {
             name,
             email,
             mobile,
-            address
+            address,
+            userId: req.user.id,
         })
 
         return res.status(201).json({
@@ -33,7 +34,7 @@ const createCustomer = async (req , res) => {
 
 const getAllCustomers = async (req , res) =>{
     try {
-        const customers = await customerModel.find();
+        const customers = await customerModel.find({userId : req.user.id});
         return res.status(200).json({
             message:"Customers fetched successfully",
             customers
@@ -49,7 +50,7 @@ const getAllCustomers = async (req , res) =>{
 const getCustomerById = async (req , res) =>{
     try{
         const { id } = req.params;
-        const customer = await customerModel.findById(id);
+        const customer = await customerModel.findOne({_id : id , userId : req.user.id});
 
         if(!customer){
             return res.status(404).json({message:"Customer not found"})

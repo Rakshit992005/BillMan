@@ -35,6 +35,11 @@ const invoiceSchema = new mongoose.Schema({
         ref: 'Customer',
         required:true,
     },
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required:true,
+    },
     items:[itemSchema],
     totalAmount:{
         type:Number,

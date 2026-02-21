@@ -27,12 +27,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    invoices:[
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Invoice',
-        }
-    ]
+    userId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required:true,
+    }
 },
 {
     timestamps:true,

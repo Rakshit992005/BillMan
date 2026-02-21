@@ -16,6 +16,7 @@ const createInvoice = async (req, res) => {
             invoiceNumber,
             date,
             customerId,
+            userId: req.user.id,
             items,
             totalAmount,
         })
@@ -32,20 +33,20 @@ const createInvoice = async (req, res) => {
 const getAllInvoices = async (req, res) => {
     const { status } = req.params;
 
-    const allowedStatus = ['pending', 'paid', 'quotation'];
+    const allowedStatus = ['pending', 'paid', 'quotation' , 'all'];
 
     if (!allowedStatus.includes(status)) {
         return res.status(400).json({ message: "Invalid status value" });
     }
 
     try {
-        let filter = {};
+        let filter = {userId: req.user.id};
 
         if (status !== "all") {
             filter.status = status;
         }
 
-        const invoices = await invoiceModel.find(filter);
+        const invoices = await invoiceModel.find(filter).sort({createdAt: -1});
 
         return res.status(200).json({
             message: "Invoices fetched successfully",
@@ -72,8 +73,7 @@ const getInvoiceById = async (req, res) => {
     }
 
     try {
-        const invoice = await invoiceModel.findById(id)
-            .populate("customerId"); // optional if you want customer details
+        const invoice = await invoiceModel.findOne({_id : id , userId : req.user.id})
 
         if (!invoice) {
             return res.status(404).json({
@@ -102,8 +102,8 @@ const stausPaid = async (req, res) => {
         });
     }
     try {
-        const updatedInvoice = await invoiceModel.findByIdAndUpdate(
-            id,
+        const updatedInvoice = await invoiceModel.findOneAndUpdate(
+            {_id : id, userId : req.user.id},
             { status: 'paid' },
             { new: true}
         );
@@ -135,7 +135,7 @@ const deleteByid = async (req, res) => {
         });
     }
     try {
-        const deletedInvoice = await invoiceModel.findByIdAndDelete(id);
+        const deletedInvoice = await invoiceModel.findOneAndDelete( {_id : id, userId : req.user.id});
 
         if(!deletedInvoice){
             return res.status(404).json({
