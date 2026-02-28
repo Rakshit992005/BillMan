@@ -2,16 +2,19 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <div>
-      <div>
+    <div className="bg-(--bg-primary) border-b-2 border-(--border-primary) text-(--text-primary) p-2 flex justify-between  items-center">
+      <div className="flex items-center  text-2xl font-semibold">
         <Link to="/">
-          <img src="/public/logo.png" alt="logo" />
+          <img src="/logo.png" alt="logo" height={50} width={50}/>
         </Link>
-        <h1>BillMan</h1>
+        <Link to="/">
+          <h1>BillMan</h1>
+        </Link>
+        
       </div>
 
-      <div>
-        <ul>
+      <div className="">
+        <ul className={`flex  pr-5 gap-5 text-(--text-secondary)`}>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -40,5 +43,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
