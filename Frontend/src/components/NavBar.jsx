@@ -5,7 +5,7 @@ const NavBar = () => {
     <div className="bg-(--bg-primary) border-b-2 border-(--border-primary) text-(--text-primary) p-2 flex justify-between sticky top-0 items-center">
       <div className="flex items-center  text-2xl font-semibold">
         <Link to="/">
-          <img src="/logo.png" alt="logo" height={50} width={50}/>
+          <img src="/img/logo.png" alt="logo" height={50} width={50}/>
         </Link>
         <Link to="/">
           <h1>BillMan</h1>
