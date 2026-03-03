@@ -3,7 +3,7 @@ import Home1Right from "../components/HomeComponents/Home1Right";
 import Home2 from "../components/HomeComponents/Home2";
 import Home3Left from "../components/HomeComponents/Home3Left";
 import Home3Right from "../components/HomeComponents/Home3Right"; 
-
+import Footer from "../components/HomeComponents/Footer";
 
 
 const Home = () => {
@@ -19,6 +19,9 @@ const Home = () => {
       <div className=" flex pt-30 pl-50 pb-10 border-b-2 border-(--border-primary)">
         <Home3Left />
         <Home3Right />
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );

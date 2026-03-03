@@ -29,7 +29,7 @@ const Home3Right = () => {
         </span>
         {steps.map((step) => (
           <div key={step.id} className="flex items-center">
-            <p className="text-2xl bg-(--color-primary) text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
+            <p className="text-2xl bg-(--color-secondary) text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
               {step.id}
             </p>
             <div className="ml-4">
