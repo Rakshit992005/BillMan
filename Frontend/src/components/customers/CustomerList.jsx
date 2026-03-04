@@ -1,29 +1,13 @@
 import React, { useState, useEffect } from "react";
 import CustomerListItem from "./CustomerListItem";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const CustomerList = () => {
   // Mock data based on the requested structure
-  const [customers, setCustomers] = useState([
-    {
-      id: 1,
-      name: "Alexander Wright",
-      email: "alex.wright@techflow.io",
-      mobile: "+1 (555) 123-4567",
-      paidAmount: 12450.0,
-      unpaidAmount: 0.0,
-      totalAmount: 12450.0,
-    },
-    {
-      id: 2,
-      name: "Sophia Martinez",
-      email: "s.martinez@creative-sol.com",
-      mobile: "+1 (555) 987-6543",
-      paidAmount: 8200.5,
-      unpaidAmount: 1500.0,
-      totalAmount: 9700.5,
-    },
-  ]);
+  const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -33,9 +17,14 @@ const CustomerList = () => {
           { withCredentials: true },
         );
         // console.log(response.data);
+        if(response.status == 401){
+            navigate("/login");
+        }
+
         setCustomers(response.data.customers);
       } catch (error) {
         // console.log(error);
+        navigate("/login");
       }
     };
     fetchCustomers();
