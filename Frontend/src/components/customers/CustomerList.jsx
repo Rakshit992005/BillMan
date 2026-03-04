@@ -30,6 +30,13 @@ const CustomerList = () => {
     fetchCustomers();
   }, []);
 
+  const detailsHandler = (e) => {
+    // console.log(e.target.closest("[data-id]"));
+    const cid = e.target.closest("[data-id]").dataset.id;
+    // console.log(cid);
+    navigate(`/customer/${cid}`);
+  }
+
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -78,9 +85,10 @@ const CustomerList = () => {
       </div>
 
       {/* List Items Mapping */}
-      <div className="divide-y divide-gray-50">
+      <div onClick={detailsHandler} className="divide-y divide-gray-50">
         {customers.length > 0 ? (
           customers.map((customer) => (
+            <div key={customer._id} data-id={customer._id}> 
             <CustomerListItem
               key={customer._id}
               name={customer.name}
@@ -89,6 +97,7 @@ const CustomerList = () => {
               unpaidAmount={customer.unpaidAmount}
               totalAmount={customer.totalAmount}
             />
+            </div>
           ))
         ) : (
           <div className="px-10 py-20 text-center text-gray-400 font-medium">
