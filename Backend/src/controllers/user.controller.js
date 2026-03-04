@@ -4,8 +4,10 @@ import userModel from "../models/user.model.js";
 import uploadFile from "../utils/imagekit.js";
 
 const userRegister = async (req, res) => {
+    console.log("reached");
     const files = req.files;
-    console.log(files);
+    console.log("files:", files);
+    console.log("req.body:", req.body);
     const { name, email, companyName, address, mobile, password } = req.body;
 
     if (!name || !email || !companyName || !address || !mobile || !password) {

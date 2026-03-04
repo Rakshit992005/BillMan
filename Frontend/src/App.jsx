@@ -7,6 +7,8 @@ import CreateInvoice from "./pages/CreateInvoice";
 import Profile from "./pages/Profile";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
+import RegisterPage from "./pages/ReisterPage";
+
 
 const App = () => {
   return (
@@ -15,6 +17,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/customer" element={<Customer />} />
         <Route path="/invoices" element={<Invoices />} />
