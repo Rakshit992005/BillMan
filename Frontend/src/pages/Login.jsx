@@ -8,27 +8,26 @@ const Login = () => {
   const navigate = useNavigate();
   const loginHandler = async (e) => {
     e.preventDefault();
-    console.log("Login Handler");
+    //     console.log("Login Handler");
 
     const email = e.target.email.value;
     const password = e.target.password.value;
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/user/login",
+        `${import.meta.env.VITE_BASE_URL}/user/login`,
         {
           email,
           password,
         },
         { withCredentials: true },
       );
-      console.log("response" + response.data.message);
-      if(response.status === 200){
+      //       console.log("response" + response.data.message);
+      if (response.status === 200) {
         navigate("/dashboard");
       }
-      
     } catch (error) {
-      console.error("Login failed:", error);
+      //       console.error("Login failed:", error);
     }
   };
 

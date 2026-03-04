@@ -12,7 +12,7 @@ import RegisterPage from "./pages/ReisterPage";
 
 const App = () => {
   return (
-    <div className="">
+    <div className="bg-(--bg-primary)">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

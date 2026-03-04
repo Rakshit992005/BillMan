@@ -115,24 +115,23 @@ const RegisterPage = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:8000/api/user/register",
+        `${import.meta.env.VITE_BASE_URL}/user/register`,
         data,
         {
           withCredentials: true,
-          
-        }
+        },
       );
-      console.log("Response:", response.data.message);
+      //       console.log("Response:", response.data.message);
       alert("Registration successful!");
     } catch (error) {
-      console.error("Registration failed:", error);
+      //       console.error("Registration failed:", error);
       alert(
         error.response?.data?.message ||
           "Registration failed. Please try again.",
       );
     }
     // Submit logic will be handled by the user
-    console.log("Registration Data:", formData);
+    //     console.log("Registration Data:", formData);
   };
 
   return (

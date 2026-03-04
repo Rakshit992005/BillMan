@@ -34,7 +34,7 @@ const createCustomer = async (req , res) => {
 
 const getAllCustomers = async (req , res) =>{
     try {
-        const customers = await customerModel.find({userId : req.user.id});
+        const customers = await customerModel.find({userId : req.user.id}).select('_id name email mobile paidAmount unpaidAmount totalAmount');
         return res.status(200).json({
             message:"Customers fetched successfully",
             customers
