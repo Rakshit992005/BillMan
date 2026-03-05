@@ -1,4 +1,5 @@
 import customerModel from "../models/customer.model.js";
+import invoiceModel from "../models/invoice.model.js";
 
 
 const createCustomer = async (req , res) => {
@@ -56,9 +57,12 @@ const getCustomerById = async (req , res) =>{
             return res.status(404).json({message:"Customer not found"})
         }
 
+        const invoices = await invoiceModel.find({customerId : id});
+
         return res.status(200).json({
             message:"Customer fetched successfully",
-            customer
+            customer,
+            invoices
         })
     } catch (error) {
         return res.status(500).json({
