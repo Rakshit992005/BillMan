@@ -30,6 +30,10 @@ const CreateCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if(!formData.name || !formData.email || !formData.mobile || !formData.address){
+        alert("Please fill all the fields");
+        return;
+      }
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/customer/create-customer/`,
         formData,
@@ -40,7 +44,7 @@ const CreateCustomer = () => {
         handleClear();
       }
     } catch (error) {
-      //         console.log(error);
+              console.log(error);
     }
   };
 
@@ -82,7 +86,7 @@ const CreateCustomer = () => {
               name="name"
               placeholder="e.g. John Smith"
               value={formData.name}
-              onChange={handleChange}
+              onChange={handleChange} 
             />
             <InputField
               label="Email Address"

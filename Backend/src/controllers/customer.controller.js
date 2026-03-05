@@ -32,13 +32,38 @@ const createCustomer = async (req , res) => {
 
 }
 
+const getAmounts = async (id) => {
+    try {
+        const invoice = await invoiceModel.find({customerId : id});
+
+        let paidAmount = 0;
+        let unpaidAmount = 0;
+        let totalAmount = 0;
+
+        invoice.forEach(invoice => {
+            if(invoice.status === "paid"){
+                paidAmount += invoice.totalAmount;
+            }else{
+                unpaidAmount += invoice.totalAmount;
+            }
+            totalAmount += invoice.totalAmount;
+        });
+
+        await customerModel.updateOne({_id : id},{$set:{paidAmount,unpaidAmount,totalAmount}});
+
+    } catch (error) {
+        console.error("error while calculating amounts",error);
+    }
+}
+
 
 const getAllCustomers = async (req , res) =>{
     try {
         const customers = await customerModel.find({userId : req.user.id}).select('_id name email mobile paidAmount unpaidAmount totalAmount');
+        
         return res.status(200).json({
             message:"Customers fetched successfully",
-            customers
+            customers,
         })
     } catch (error) {
         return res.status(500).json({
@@ -58,11 +83,11 @@ const getCustomerById = async (req , res) =>{
         }
 
         const invoices = await invoiceModel.find({customerId : id});
-
+        getAmounts(id);
         return res.status(200).json({
             message:"Customer fetched successfully",
             customer,
-            invoices
+            invoices,
         })
     } catch (error) {
         return res.status(500).json({
