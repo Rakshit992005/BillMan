@@ -13,7 +13,7 @@ import CustomerDetails from "./pages/CustomerDetails";
 
 const App = () => {
   return (
-    <div className="bg-(--bg-primary)">
+    <div className="bg-(--bg-primary) h-screen">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

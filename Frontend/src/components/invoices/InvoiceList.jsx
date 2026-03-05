@@ -109,7 +109,7 @@ const InvoiceList = ({ invoices }) => {
         </div>
         <h3 className="text-lg font-semibold text-dark">No invoices found</h3>
         <p className="text-(--text-secondary)">
-          This customer doesn't have any invoices yet.
+          You don't have any invoices yet.
         </p>
       </div>
     );

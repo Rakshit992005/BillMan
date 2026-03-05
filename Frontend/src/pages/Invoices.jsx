@@ -1,51 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InvoiceList from "../components/invoices/InvoiceList";
+import axios from "axios";
 
 const Invoices = () => {
-  // Sample data for demonstration
-  const allInvoices = [
-    {
-      invoiceNumber: "INV-2026-003",
-      date: "2026-03-01T00:00:00.000Z",
-      totalAmount: 5500,
-      status: "paid",
-    },
-    {
-      invoiceNumber: "INV-2026-002",
-      date: "2026-02-16T00:00:00.000Z",
-      totalAmount: 2000,
-      status: "pending",
-    },
-    {
-      invoiceNumber: "INV-2026-001",
-      date: "2026-01-10T00:00:00.000Z",
-      totalAmount: 12000,
-      status: "overdue",
-    },
-  ];
+  const [invoices, setInvoices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/invoice/status/${filter}`,
+          { withCredentials: true },
+        );
+        setInvoices(response.data.invoices);
+      } catch (error) {
+        console.error("Error fetching invoices:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInvoices();
+  }, [filter]);
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <p className="text-xl text-(--text-secondary) animate-pulse">
+          Loading Invoices...
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <h1 className="text-4xl font-extrabold text-dark tracking-tight">
-            INVOICES
-          </h1>
-          <p className="text-(--text-secondary) mt-2 italic">
-            A comprehensive view of all your billing transactions.
-          </p>
-        </div>
-        <div className="flex gap-4">
-          <div className="relative group">
-            <input
-              type="text"
-              placeholder="Search invoice number..."
-              className="pl-12 pr-6 py-3 bg-white border border-primary/30 rounded-full focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all text-sm min-w-[300px]"
-            />
+    <div className="max-w-7xl mx-auto px-6 py-12 space-y-8 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-primary/10 pb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-primary/10 text-primary rounded-xl font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors"
+              className="h-8 w-8"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -54,61 +51,55 @@ const Invoices = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
           </div>
-          <button className="px-8 py-3 bg-dark text-white font-bold rounded-full hover:bg-primary hover:scale-105 active:scale-95 transition-all shadow-xl shadow-dark/20">
-            Export CSV
-          </button>
+          <h1 className="text-3xl font-extrabold text-dark tracking-tight">
+            Invoices
+          </h1>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <label
+            htmlFor="status-filter"
+            className="text-sm font-medium text-(--text-secondary)"
+          >
+            Filter by Status:
+          </label>
+          <div className="relative">
+            <select
+              id="status-filter"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="appearance-none px-4 py-2.5 pr-10 bg-white border border-primary/20 rounded-lg text-dark font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 hover:border-primary/50 transition-all cursor-pointer shadow-sm"
+            >
+              <option value="all">All Invoices</option>
+              <option value="paid">Paid</option>
+              <option value="pending">Pending</option>
+              <option value="quotation">Quotation</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-(--text-secondary)">
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Summary Cards (Optional for Invoices Page) */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {[
-          {
-            label: "Total Invoices",
-            value: "1,234",
-            color: "bg-blue-50 text-blue-700",
-          },
-          {
-            label: "Total Revenue",
-            value: "₹45,67,890",
-            color: "bg-emerald-50 text-emerald-700",
-          },
-          {
-            label: "Pending Collections",
-            value: "₹12,34,567",
-            color: "bg-amber-50 text-amber-700",
-          },
-          {
-            label: "Overdue Amount",
-            value: "₹3,45,678",
-            color: "bg-rose-50 text-rose-700",
-          },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className={`${stat.color} p-4 rounded-xl border border-current/10 flex flex-col gap-1`}
-          >
-            <span className="text-xs font-bold uppercase tracking-widest opacity-70">
-              {stat.label}
-            </span>
-            <span className="text-2xl font-black">{stat.value}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Main Content Area */}
-      <div className="bg-white/40 backdrop-blur-md p-8 rounded-xl border border-primary/10 shadow-sm">
-        <h2 className="text-xl font-bold text-dark mb-8 flex items-center gap-3">
-          <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-lg text-sm">
-            #
-          </span>
-          Recent Transactions
-        </h2>
-        <InvoiceList invoices={allInvoices} />
+      <div className="bg-white/30 backdrop-blur-sm rounded-xl">
+        <InvoiceList invoices={invoices} />
       </div>
     </div>
   );
