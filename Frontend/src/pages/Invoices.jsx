@@ -25,6 +25,41 @@ const Invoices = () => {
     fetchInvoices();
   }, [filter]);
 
+  const handleStatusChange = async (id) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BASE_URL}/invoice/${id}/paid`,
+        {},
+        { withCredentials: true },
+      );
+      if (response.status === 200) {
+        setInvoices(
+          invoices.map((inv) =>
+            inv._id === id ? { ...inv, status: "paid" } : inv,
+          ),
+        );
+      }
+    } catch (error) {
+      console.error("Error updating invoice status:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this invoice?")) {
+      try {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_BASE_URL}/invoice/${id}/delete`,
+          { withCredentials: true },
+        );
+        if (response.status === 200) {
+          setInvoices(invoices.filter((inv) => inv._id !== id));
+        }
+      } catch (error) {
+        console.error("Error deleting invoice:", error);
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -99,7 +134,11 @@ const Invoices = () => {
       </div>
 
       <div className="bg-white/30 backdrop-blur-sm rounded-xl">
-        <InvoiceList invoices={invoices} />
+        <InvoiceList
+          invoices={invoices}
+          onStatusChange={handleStatusChange}
+          onDelete={handleDelete}
+        />
       </div>
     </div>
   );

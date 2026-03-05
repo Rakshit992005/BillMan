@@ -38,26 +38,58 @@ const CustomerDetails = () => {
       date: "",
       totalAmount: 0,
       status: "",
-    }
+    },
   ]);
 
-  useEffect(() => {
-    const apiCall = async () => {
+  const apiCall = async () => {
     try {
-      // console.log("Customer ID: ",id);  
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/customer/get-customer/${id}`,{withCredentials:true});
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/customer/get-customer/${id}`,
+        { withCredentials: true },
+      );
       setCustomer(response.data.customer);
-      // console.log("Customer Data: ",response.data.customer);
-      // console.log("invoices : ",response.data.invoices);
       setInvoices(response.data.invoices);
     } catch (error) {
       console.log(error);
     }
-  }
-  apiCall();
+  };
 
-  }, [])
-  
+  useEffect(() => {
+    apiCall();
+  }, []);
+
+  const handleStatusChange = async (invoiceId) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BASE_URL}/invoice/${invoiceId}/paid`,
+        {},
+        { withCredentials: true },
+      );
+      if (response.status === 200) {
+        // Re-fetch customer data to update the "Amount Paid" / "Unpaid Balance" stats
+        apiCall();
+      }
+    } catch (error) {
+      console.error("Error updating invoice status:", error);
+    }
+  };
+
+  const handleDelete = async (invoiceId) => {
+    if (window.confirm("Are you sure you want to delete this invoice?")) {
+      try {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_BASE_URL}/invoice/${invoiceId}/delete`,
+          { withCredentials: true },
+        );
+        if (response.status === 200) {
+          // Re-fetch customer data to update everything
+          apiCall();
+        }
+      } catch (error) {
+        console.error("Error deleting invoice:", error);
+      }
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12 animate-fade-in">
@@ -197,7 +229,11 @@ const CustomerDetails = () => {
           </button>
         </div>
 
-        <InvoiceList invoices={invoices} />
+        <InvoiceList
+          invoices={invoices}
+          onStatusChange={handleStatusChange}
+          onDelete={handleDelete}
+        />
       </div>
     </div>
   );
