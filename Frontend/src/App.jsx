@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import RegisterPage from "./pages/ReisterPage";
 import CustomerDetails from "./pages/CustomerDetails";
+import ProtectedRoutes from "./util/ProtectedRoutes.jsx";
 
 
 const App = () => {
@@ -19,12 +20,24 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/customer" element={<Customer />} />
-        <Route path="/customer/:id" element={<CustomerDetails />} />
-        <Route path="/invoices" element={<Invoices />} />
-        <Route path="/createinvoice" element={<CreateInvoice />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoutes children={<DashBoard />} />
+        } />
+        <Route path="/customer" element={
+          <ProtectedRoutes children={<Customer />} />
+        } />
+        <Route path="/customer/:id" element={
+          <ProtectedRoutes children={<CustomerDetails />} />
+        } />
+        <Route path="/invoices" element={
+          <ProtectedRoutes children={<Invoices />} />
+        } />
+        <Route path="/createinvoice" element={
+          <ProtectedRoutes children={<CreateInvoice />} />
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoutes children={<Profile />} />
+        } />
       </Routes>
     </div>
   );
