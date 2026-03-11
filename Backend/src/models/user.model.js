@@ -1,6 +1,29 @@
 import mongoose from 'mongoose';
 
 
+const bankDetailsSchema = new mongoose.Schema({
+    bankName: {
+        type: String,
+        required: true
+    },
+    accountNumber: {
+        type: String,
+        required: true
+    },
+    ifscCode: {
+        type: String,
+        required: true
+    },
+    branchName: {
+        type: String,
+        required: true
+    },
+    panNumber: {
+        type: String,
+        required: true
+    }
+})
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -33,6 +56,10 @@ const userSchema = new mongoose.Schema({
     },
     stampUrl: {
         type: String,
+        required: false,
+    },
+    bankDetails: {
+        type: bankDetailsSchema,
         required: false,
     }
 },

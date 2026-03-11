@@ -24,6 +24,7 @@ const Login = () => {
       );
       //       console.log("response" + response.data.message);
       if (response.status === 200) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         navigate("/dashboard");
       }
     } catch (error) {

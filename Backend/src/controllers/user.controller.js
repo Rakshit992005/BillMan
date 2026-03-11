@@ -8,9 +8,9 @@ const userRegister = async (req, res) => {
     const files = req.files;
     console.log("files:", files);
     console.log("req.body:", req.body);
-    const { name, email, companyName, address, mobile, password } = req.body;
+    const { name, email, companyName, address, mobile, password, bankName, accountNumber, ifscCode, branchName, panNumber } = req.body;
 
-    if (!name || !email || !companyName || !address || !mobile || !password) {
+    if (!name || !email || !companyName || !address || !mobile || !password || !bankName || !accountNumber || !ifscCode || !branchName || !panNumber) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -38,7 +38,14 @@ const userRegister = async (req, res) => {
             address,
             mobile,
             logoUrl,
-            stampUrl
+            stampUrl,
+            bankDetails: {
+                bankName,
+                accountNumber,
+                ifscCode,
+                branchName,
+                panNumber,
+            }
         });
 
         const option = {
@@ -63,7 +70,14 @@ const userRegister = async (req, res) => {
                 address,
                 mobile,
                 logoUrl,
-                stampUrl
+                stampUrl,
+                bankDetails: {
+                    bankName,
+                    accountNumber,
+                    ifscCode,
+                    branchName,
+                    panNumber,
+                }
             }
         })
     } catch (error) {
@@ -115,7 +129,10 @@ const userLogin = async (req, res) => {
                 email: user.email,
                 companyName: user.companyName,
                 address: user.address,
-                mobile: user.mobile
+                mobile: user.mobile,
+                bankDetails: user.bankDetails,
+                logoUrl: user.logoUrl,
+                stampUrl: user.stampUrl
             }
         })
 

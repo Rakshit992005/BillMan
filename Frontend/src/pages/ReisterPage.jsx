@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,6 +12,11 @@ const RegisterPage = () => {
     address: "",
     password: "",
     confirmPassword: "",
+    bankName: "",
+    accountNumber: "",
+    ifscCode: "",
+    branchName: "",
+    panNumber: "",
     agreeToTerms: false,
     logo: null,
     stamp: null,
@@ -122,7 +128,11 @@ const RegisterPage = () => {
         },
       );
       //       console.log("Response:", response.data.message);
-      alert("Registration successful!");
+      if (response.status === 201) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        alert("Registration successful!");
+        navigate("/dashboard");
+      }
     } catch (error) {
       //       console.error("Registration failed:", error);
       alert(
@@ -388,6 +398,107 @@ const RegisterPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Section: Bank Details */}
+          <section>
+            <div className="flex items-center gap-3 mb-6 border-b border-gray-100 pb-4">
+              <div className="p-2 bg-green-50 text-green-600 rounded-lg">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </div>
+              <h2 className="text-xs font-black text-gray-400 tracking-[0.2em] uppercase">
+                Bank Details
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                  Bank Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="bankName"
+                  required
+                  placeholder="State Bank of India"
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                  value={formData.bankName}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                  Account Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="accountNumber"
+                  required
+                  placeholder="1234567890"
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                  value={formData.accountNumber}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                  IFSC Code <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="ifscCode"
+                  required
+                  placeholder="SBIN0001234"
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                  value={formData.ifscCode}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                  Branch Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="branchName"
+                  required
+                  placeholder="Main Branch"
+                  className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                  value={formData.branchName}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 mb-8">
+              <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                PAN Number <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="panNumber"
+                required
+                placeholder="ABCDE1234F"
+                className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                value={formData.panNumber}
+                onChange={handleInputChange}
+              />
             </div>
           </section>
 
