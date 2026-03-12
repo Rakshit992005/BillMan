@@ -266,13 +266,13 @@ const InvoicePreview = forwardRef(
             <div>
               Bank Name :{" "}
               <span className="font-semibold">
-                {companyData?.bankName || "BANK OF INDIA"}
+                {companyData?.bankName || "-"}
               </span>
             </div>
             <div>
               Branch:{" "}
               <span className="font-semibold">
-                {companyData?.branch || "Kharghar"}
+                {companyData?.branch || "-"}
               </span>
             </div>
             <div>

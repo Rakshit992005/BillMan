@@ -2,9 +2,9 @@ import invoiceModel from "../models/invoice.model.js";
 import mongoose from "mongoose";
 
 const createInvoice = async (req, res) => {
-    const { invoiceNumber, date, customerId, items } = req.body;
+    const { invoiceNumber, date, customerId, items , status} = req.body;
 
-    if (!invoiceNumber || !date || !customerId || !items) {
+    if (!invoiceNumber || !date || !customerId || !items ) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -19,12 +19,14 @@ const createInvoice = async (req, res) => {
             userId: req.user.id,
             items,
             totalAmount,
+            status,
         })
 
         return res.status(201).json({ message: "Invoice created successfully", newInvoice });
 
     } catch (error) {
-        return res.status(500).json({ message: "Internal server error while creating invoice" });
+        // console.log(error);
+        return res.status(500).json({ message: "Internal server error while creating invoice" , error : error });
     }
 
 }

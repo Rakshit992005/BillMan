@@ -168,6 +168,15 @@ const CreateInvoice = () => {
     }));
   };
 
+  const save = async (payload) =>{
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/invoice/create-invoice`, payload, { withCredentials: true });
+        // console.log("invoice saved successfully" , response.data)
+      } catch (error) {
+        console.error("error occured while saving the invoice" , error)
+      }
+  }
+
   // Placeholders for User's Logic
   const handleSave = () => {
     // Format payload to the required structure exactly as user stated
@@ -183,15 +192,17 @@ const CreateInvoice = () => {
         date: new Date(item.date).toISOString(),
         totalAmount: Number(item.quantity) * Number(item.price),
       })),
+      status: invoiceData.documentType === 'Invoice' ? 'pending' : "Quotation",
       totalAmount: invoiceData.totalAmount,
     };
-    console.log("Saving payload:", payload);
-    // User will add actual API logic here
+
+     save(payload)
+    // console.log("Saving payload:", payload);
   };
 
   const handlePrint = () => {
     console.log("Printing invoice...");
-    // User will add react-to-print or window.print logic here
+    
   };
 
   const selectedCustomerData =
