@@ -113,7 +113,7 @@ const InvoicePreview = forwardRef(
           <div className="text-sm font-medium">
             mob. {companyData?.mobile || "xxxxxxxxxx"}
             <br />
-            pan. {companyData?.panNumber || "xxxxxxxxxx"}
+            {companyData?.panNumber === "" ? "" : "pan. " + companyData?.panNumber}
           </div>
         </div>
 

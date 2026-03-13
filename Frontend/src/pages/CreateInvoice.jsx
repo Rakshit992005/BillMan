@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import InvoicePreview from "../components/invoices/InvoicePreview";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const CreateInvoice = () => {
   const navigate = useNavigate();
@@ -200,9 +202,59 @@ const CreateInvoice = () => {
     // console.log("Saving payload:", payload);
   };
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
     console.log("Printing invoice...");
-    
+    const doc = printRef.current;
+    if(!doc){
+      console.error("No document ref found");
+      return;
+    }
+
+    // Temporarily remove scale from the wrapper to avoid html2canvas capturing bugs
+    const wrapper = document.getElementById('preview-scale-wrapper');
+    const originalClassName = wrapper ? wrapper.className : '';
+    if (wrapper) {
+      wrapper.className = "origin-top flex justify-center w-full transition-transform";
+      // Ensure no shadow artifacts are rendered on the canvas
+      doc.classList.remove('shadow-2xl');
+      doc.style.border = 'none';
+
+      // Small delay to let the browser paint the unscaled DOM
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    try {
+      const canvas = await html2canvas(doc, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        windowWidth: doc.scrollWidth,
+        windowHeight: doc.scrollHeight
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("invoice.pdf");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      // Restore the scale classes
+      if (wrapper) {
+        wrapper.className = originalClassName;
+        doc.classList.add('shadow-2xl');
+        doc.style.border = '';
+      }
+    }
   };
 
   const selectedCustomerData =
@@ -451,7 +503,7 @@ const CreateInvoice = () => {
       {/* RIGHT PANEL - PREVIEW */}
       <div className="w-1/2 p-6 overflow-y-auto bg-gray-800/5 backdrop-blur flex justify-center items-start custom-scrollbar">
         {/* Scale wrapper to fit standard A4 width on smaller screens */}
-        <div className="origin-top flex justify-center w-full sm:scale-75 lg:scale-[0.85] xl:scale-100 transition-transform">
+        <div id="preview-scale-wrapper" className="origin-top flex justify-center w-full sm:scale-75 lg:scale-[0.85] xl:scale-100 transition-transform">
           <InvoicePreview
             ref={printRef}
             invoiceData={invoiceData}
