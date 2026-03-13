@@ -2,15 +2,21 @@ import invoiceModel from "../models/invoice.model.js";
 import mongoose from "mongoose";
 
 const createInvoice = async (req, res) => {
-    const { invoiceNumber, date, customerId, items , status} = req.body;
+    const { invoiceNumber, date, customerId, items, status } = req.body;
 
-    if (!invoiceNumber || !date || !customerId || !items ) {
+    if (!invoiceNumber || !date || !customerId || !items) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
     try {
 
+        const ifExist = await invoiceModel.findOne({ invoiceNumber: invoiceNumber, userId: req.user.id });
+        
         const totalAmount = items.reduce((acc, item) => acc + item.totalAmount, 0);
+        if (ifExist) {
+            const updatedInvoice = await invoiceModel.findOneAndUpdate({ invoiceNumber: invoiceNumber, userId: req.user.id }, { items: items, totalAmount: totalAmount, status: status }, { new: true });
+            return res.status(200).json({ message: "Invoice updated successfully", updatedInvoice });
+        }
 
         const newInvoice = await invoiceModel.create({
             invoiceNumber,
@@ -26,7 +32,7 @@ const createInvoice = async (req, res) => {
 
     } catch (error) {
         // console.log(error);
-        return res.status(500).json({ message: "Internal server error while creating invoice" , error : error });
+        return res.status(500).json({ message: "Internal server error while creating invoice", error: error });
     }
 
 }
@@ -35,20 +41,20 @@ const createInvoice = async (req, res) => {
 const getAllInvoices = async (req, res) => {
     const { status } = req.params;
 
-    const allowedStatus = ['pending', 'paid', 'quotation' , 'all'];
+    const allowedStatus = ['pending', 'paid', 'quotation', 'all'];
 
     if (!allowedStatus.includes(status)) {
         return res.status(400).json({ message: "Invalid status value" });
     }
 
     try {
-        let filter = {userId: req.user.id};
+        let filter = { userId: req.user.id };
 
         if (status !== "all") {
             filter.status = status;
         }
 
-        const invoices = await invoiceModel.find(filter).sort({createdAt: -1});
+        const invoices = await invoiceModel.find(filter).sort({ createdAt: -1 });
 
         return res.status(200).json({
             message: "Invoices fetched successfully",
@@ -75,7 +81,7 @@ const getInvoiceById = async (req, res) => {
     }
 
     try {
-        const invoice = await invoiceModel.findOne({_id : id , userId : req.user.id})
+        const invoice = await invoiceModel.findOne({ _id: id, userId: req.user.id })
 
         if (!invoice) {
             return res.status(404).json({
@@ -105,12 +111,12 @@ const stausPaid = async (req, res) => {
     }
     try {
         const updatedInvoice = await invoiceModel.findOneAndUpdate(
-            {_id : id, userId : req.user.id},
+            { _id: id, userId: req.user.id },
             { status: 'paid' },
-            { new: true}
+            { new: true }
         );
 
-        if(!updatedInvoice){
+        if (!updatedInvoice) {
             return res.status(404).json({
                 message: "Invoice not found"
             });
@@ -137,9 +143,9 @@ const deleteByid = async (req, res) => {
         });
     }
     try {
-        const deletedInvoice = await invoiceModel.findOneAndDelete( {_id : id, userId : req.user.id});
+        const deletedInvoice = await invoiceModel.findOneAndDelete({ _id: id, userId: req.user.id });
 
-        if(!deletedInvoice){
+        if (!deletedInvoice) {
             return res.status(404).json({
                 message: "Invoice not found"
             });
