@@ -14,7 +14,7 @@ import ProtectedRoutes from "./util/ProtectedRoutes.jsx";
 
 const App = () => {
   return (
-    <div className="bg-(--bg-primary) h-screen">
+    <div className="bg-(--bg-primary) min-h-screen">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

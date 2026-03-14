@@ -17,9 +17,23 @@ const CreateInvoice = () => {
   const location = useLocation();
   const editInvoiceData = location.state?.invoiceData || null;
 
+  // Format dates and ensure item IDs for the edit payload
+  const formatInvoiceData = (data) => {
+    if (!data) return null;
+    return {
+      ...data,
+      date: data.date ? new Date(data.date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),
+      items: data.items?.map((item) => ({
+        ...item,
+        id: item.id || item._id || Math.random(),
+        date: item.date ? new Date(item.date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10)
+      })) || []
+    };
+  };
+
   // Create a default invoice state or use passed data
-  const [invoiceData, setInvoiceData] = useState(
-    editInvoiceData || {
+  const [invoiceData, setInvoiceData] = useState(() => {
+    return formatInvoiceData(editInvoiceData) || {
       invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(
         Math.random() * 1000,
       )
@@ -39,8 +53,8 @@ const CreateInvoice = () => {
       ],
       totalAmount: 0,
       customerId: "",
-    },
-  );
+    };
+  });
 
   useEffect(() => {
     if (editInvoiceData && editInvoiceData.customerId) {
@@ -194,7 +208,7 @@ const CreateInvoice = () => {
         date: new Date(item.date).toISOString(),
         totalAmount: Number(item.quantity) * Number(item.price),
       })),
-      status: invoiceData.documentType === 'Invoice' ? 'pending' : "Quotation",
+      status: (invoiceData.documentType === 'Invoice' || invoiceData.documentType === 'pending') ? 'pending' : "Quotation",
       totalAmount: invoiceData.totalAmount,
     };
 

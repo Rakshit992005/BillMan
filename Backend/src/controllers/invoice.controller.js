@@ -11,10 +11,14 @@ const createInvoice = async (req, res) => {
     try {
 
         const ifExist = await invoiceModel.findOne({ invoiceNumber: invoiceNumber, userId: req.user.id });
-        
+
         const totalAmount = items.reduce((acc, item) => acc + item.totalAmount, 0);
         if (ifExist) {
-            const updatedInvoice = await invoiceModel.findOneAndUpdate({ invoiceNumber: invoiceNumber, userId: req.user.id }, { items: items, totalAmount: totalAmount, status: status }, { new: true });
+            const updatedInvoice = await invoiceModel.findOneAndUpdate(
+                { invoiceNumber: invoiceNumber, userId: req.user.id },
+                { items: items, totalAmount: totalAmount, status: status },
+                { returnDocument: "after" }
+            );
             return res.status(200).json({ message: "Invoice updated successfully", updatedInvoice });
         }
 

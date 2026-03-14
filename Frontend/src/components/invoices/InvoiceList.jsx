@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const StatusBadge = ({ status }) => {
   const getStatusStyles = () => {
@@ -24,6 +25,8 @@ const StatusBadge = ({ status }) => {
 };
 
 const InvoiceListItem = ({ invoice, onStatusChange, onDelete }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="group flex items-center justify-between p-4 mb-3 bg-white border border-primary/20 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <div className="flex items-center gap-4">
@@ -92,6 +95,7 @@ const InvoiceListItem = ({ invoice, onStatusChange, onDelete }) => {
           )}
 
           <button
+            onClick={() => navigate("/createinvoice", { state: { invoiceData: invoice } })}
             className="p-2 text-(--text-secondary) hover:text-primary transition-colors hover:bg-primary/10 rounded-lg"
             title="View Details"
           >
