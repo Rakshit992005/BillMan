@@ -28,8 +28,8 @@ const InvoiceListItem = ({ invoice, onStatusChange, onDelete }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="group flex items-center justify-between p-4 mb-3 bg-white border border-primary/20 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-      <div className="flex items-center gap-4">
+    <div className="group flex flex-wrap items-center justify-between gap-4 p-4 mb-3 bg-white border border-primary/20 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+      <div className="flex items-center gap-4 min-w-[200px]">
         <div className="w-12 h-12 flex items-center justify-center bg-primary/10 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-colors duration-300">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ const InvoiceListItem = ({ invoice, onStatusChange, onDelete }) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-8">
+      <div className="flex flex-wrap items-center gap-4 md:gap-8 md:ml-auto w-full md:w-auto">
         <div className="text-right">
           <p className="text-sm font-medium text-(--text-secondary)">
             Total Amount
