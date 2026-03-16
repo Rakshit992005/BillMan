@@ -31,6 +31,28 @@ const createCustomer = async (req, res) => {
     }
 
 }
+const updateCustomer = async (req, res) => {
+    const { name, email, mobile, address } = req.body;
+
+    if (!name || !email || !mobile || !address) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    try {
+        const customer = await customerModel.findById(req.params.id);
+
+        customer.name = name;
+        customer.email = email;
+        customer.mobile = mobile;
+        customer.address = address;
+
+        await customer.save();
+
+        return res.status(200).json({ message: "Customer updated successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error while updating customer", error: error.message });
+    }
+}
 
 const getAmounts = async (id) => {
     try {
@@ -102,5 +124,6 @@ const getCustomerById = async (req, res) => {
 export {
     createCustomer,
     getAllCustomers,
-    getCustomerById
+    getCustomerById,
+    updateCustomer
 }

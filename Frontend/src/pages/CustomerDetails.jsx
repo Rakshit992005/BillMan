@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import InvoiceList from "../components/invoices/InvoiceList";
+import UpdateCustomerDetails from "../components/UpdateCustomerDetails";
 import axios from "axios";
 
 const StatCard = ({ label, amount, accentColor }) => {
@@ -21,6 +22,8 @@ const StatCard = ({ label, amount, accentColor }) => {
 
 const CustomerDetails = () => {
   const { id } = useParams();
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [customer, setCustomer] = useState({
     name: "Loading...",
@@ -162,12 +165,23 @@ const CustomerDetails = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="px-6 py-2.5 bg-primary text-white font-bold rounded-md shadow-lg shadow-primary/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all">
+            <button
+              onClick={() => setIsUpdating(true)}
+              className="px-6 py-2.5 bg-primary text-white font-bold rounded-md shadow-lg shadow-primary/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            >
               Update Details
             </button>
           </div>
         </div>
       </div>
+
+      {isUpdating && customer && (
+        <UpdateCustomerDetails
+          customer={customer}
+          onClose={() => setIsUpdating(false)}
+          onUpdateSuccess={apiCall}
+        />
+      )}
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
