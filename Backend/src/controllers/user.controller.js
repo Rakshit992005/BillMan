@@ -161,7 +161,85 @@ const userLogout = async (req, res) => {
     return res.status(200).json({ message: "User logged out successfully" })
 }
 
+const changePassword = async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
 
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+    try {
+
+        const user = await userModel.findById(req.user.id);
+
+        const check = await bcrypt.compare(currentPassword, user.password);
+
+        if (!check) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+
+        await user.save();
+
+        return res.status(200).json({ message: "Password changed successfully" });
+
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error while changing password", error: error.message });
+    }
+
+}
+
+const updateUserDetails = async (req, res) => {
+    const { name, companyName, address, mobile, bankName, accountNumber, ifscCode, branchName, panNumber } = req.body;
+
+    if (!name || !companyName || !address || !mobile || !bankName || !accountNumber || !ifscCode || !branchName || !panNumber) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    try {
+        const user = await userModel.findById(req.user.id);
+
+        const files = req.files || {};
+        
+        if (files.logo && files.logo.length > 0) {
+            const logoUrl = await uploadFile(files.logo[0].buffer.toString("base64"));
+            user.logoUrl = logoUrl;
+        }
+        
+        if (files.stamp && files.stamp.length > 0) {
+            const stampUrl = await uploadFile(files.stamp[0].buffer.toString("base64"));
+            user.stampUrl = stampUrl;
+        }
+
+        user.name = name;
+        user.companyName = companyName;
+        user.address = address;
+        user.mobile = mobile;
+        user.bankDetails.bankName = bankName;
+        user.bankDetails.accountNumber = accountNumber;
+        user.bankDetails.ifscCode = ifscCode;
+        user.bankDetails.branchName = branchName;
+        user.bankDetails.panNumber = panNumber;
+
+        await user.save();
+
+        return res.status(200).json({ message: "User details updated successfully", user: {
+            name: user.name,
+            email: user.email,
+            companyName: user.companyName,
+            address: user.address,
+            mobile: user.mobile,
+            logoUrl: user.logoUrl,
+            stampUrl: user.stampUrl,
+            bankDetails: user.bankDetails
+        }});
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error while updating user details", error: error.message });
+    }
+
+}
 
 
 
@@ -169,4 +247,6 @@ export {
     userRegister,
     userLogin,
     userLogout,
+    changePassword,
+    updateUserDetails
 }
