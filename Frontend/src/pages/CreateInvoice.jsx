@@ -275,9 +275,9 @@ const CreateInvoice = () => {
     customers.find((c) => c._id === selectedCustomerId) || {};
 
   return (
-    <div className="flex h-[calc(100vh-80px)] overflow-hidden bg-(--bg-primary) text-gray-800">
+    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] lg:overflow-hidden bg-gray-50/30 text-gray-800">
       {/* LEFT PANEL - FORM */}
-      <div className="w-1/2 p-8 overflow-y-auto border-r border-gray-200/60 bg-white/80 backdrop-blur-md shadow-xl custom-scrollbar flex flex-col gap-6">
+      <div className="w-full lg:w-1/2 p-4 sm:p-8 lg:overflow-y-auto border-b lg:border-b-0 lg:border-r border-gray-200/60 bg-gray-800/5 backdrop-blur-md custom-scrollbar flex flex-col gap-6">
         {/* Header Actions */}
         <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
           <h2 className="text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-indigo-400">
@@ -515,9 +515,9 @@ const CreateInvoice = () => {
       </div>
 
       {/* RIGHT PANEL - PREVIEW */}
-      <div className="w-1/2 p-6 overflow-y-auto bg-gray-800/5 backdrop-blur flex justify-center items-start custom-scrollbar">
+      <div className="w-full lg:w-1/2 p-4 sm:p-6 lg:overflow-y-auto bg-gray-800/5 backdrop-blur flex justify-center items-start custom-scrollbar overflow-x-auto">
         {/* Scale wrapper to fit standard A4 width on smaller screens */}
-        <div id="preview-scale-wrapper" className="origin-top flex justify-center w-full sm:scale-75 lg:scale-[0.85] xl:scale-100 transition-transform">
+        <div id="preview-scale-wrapper" className="origin-top flex justify-center min-w-max sm:min-w-0 w-full scale-[0.6] sm:scale-75 lg:scale-[0.85] xl:scale-100 transition-transform pb-20">
           <InvoicePreview
             ref={printRef}
             invoiceData={invoiceData}
