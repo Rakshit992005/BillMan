@@ -39,6 +39,11 @@ const CustomerList = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  const filteredCustomers = customers.filter(customer =>
+    customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.email?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="bg-white rounded-[2rem] border border-gray-100/60 shadow-xl shadow-gray-200/40 overflow-hidden">
       {/* Top Toolbar */}
@@ -86,8 +91,8 @@ const CustomerList = () => {
 
       {/* List Items Mapping */}
       <div onClick={detailsHandler} className="divide-y divide-gray-50">
-        {customers.length > 0 ? (
-          customers.map((customer) => (
+        {filteredCustomers.length > 0 ? (
+          filteredCustomers.map((customer) => (
             <div key={customer._id} data-id={customer._id}> 
             <CustomerListItem
               key={customer._id}
