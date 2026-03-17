@@ -17,7 +17,7 @@ const NavBar = () => {
       await axios.post(
         `${import.meta.env.VITE_BASE_URL}/user/logout`,
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
     } catch (error) {
       console.error("Logout failed:", error);
@@ -61,13 +61,21 @@ const NavBar = () => {
           </li>
           {isAuthenticated ? (
             <li>
-              <button onClick={handleLogout} className="cursor-pointer hover:text-red-500 transition-colors">
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer hover:text-red-500 transition-colors"
+              >
                 Logout
               </button>
             </li>
           ) : (
             <li>
-              <Link to="/login" className="hover:text-primary transition-colors">Login</Link>
+              <Link
+                to="/login"
+                className="hover:text-primary transition-colors"
+              >
+                Login
+              </Link>
             </li>
           )}
         </ul>

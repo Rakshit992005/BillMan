@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import InvoicePreview from "../components/invoices/InvoicePreview";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { toast, Bounce } from "react-toastify";
 
 const CreateInvoice = () => {
   const navigate = useNavigate();
@@ -22,38 +23,45 @@ const CreateInvoice = () => {
     if (!data) return null;
     return {
       ...data,
-      date: data.date ? new Date(data.date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),
-      items: data.items?.map((item) => ({
-        ...item,
-        id: item.id || item._id || Math.random(),
-        date: item.date ? new Date(item.date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10)
-      })) || []
+      date: data.date
+        ? new Date(data.date).toISOString().substring(0, 10)
+        : new Date().toISOString().substring(0, 10),
+      items:
+        data.items?.map((item) => ({
+          ...item,
+          id: item.id || item._id || Math.random(),
+          date: item.date
+            ? new Date(item.date).toISOString().substring(0, 10)
+            : new Date().toISOString().substring(0, 10),
+        })) || [],
     };
   };
 
   // Create a default invoice state or use passed data
   const [invoiceData, setInvoiceData] = useState(() => {
-    return formatInvoiceData(editInvoiceData) || {
-      invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(
-        Math.random() * 1000,
-      )
-        .toString()
-        .padStart(3, "0")}`,
-      documentType: "Invoice",
-      date: new Date().toISOString().substring(0, 10),
-      items: [
-        {
-          id: Date.now(),
-          description: "",
-          quantity: 1,
-          price: 0,
-          date: new Date().toISOString().substring(0, 10),
-          totalAmount: 0,
-        },
-      ],
-      totalAmount: 0,
-      customerId: "",
-    };
+    return (
+      formatInvoiceData(editInvoiceData) || {
+        invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(
+          Math.random() * 1000,
+        )
+          .toString()
+          .padStart(3, "0")}`,
+        documentType: "Invoice",
+        date: new Date().toISOString().substring(0, 10),
+        items: [
+          {
+            id: Date.now(),
+            description: "",
+            quantity: 1,
+            price: 0,
+            date: new Date().toISOString().substring(0, 10),
+            totalAmount: 0,
+          },
+        ],
+        totalAmount: 0,
+        customerId: "",
+      }
+    );
   });
 
   useEffect(() => {
@@ -184,14 +192,35 @@ const CreateInvoice = () => {
     }));
   };
 
-  const save = async (payload) =>{
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/invoice/create-invoice`, payload, { withCredentials: true });
-        // console.log("invoice saved successfully" , response.data)
-      } catch (error) {
-        console.error("error occured while saving the invoice" , error)
-      }
-  }
+  const showSuccess = () => {
+    toast.success("saved successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  
+
+  const save = async (payload) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/invoice/create-invoice`,
+        payload,
+        { withCredentials: true },
+      );
+      // console.log("invoice saved successfully" , response.data)
+      showSuccess();
+    } catch (error) {
+      console.error("error occured while saving the invoice", error);
+    }
+  };
 
   // Placeholders for User's Logic
   const handleSave = () => {
@@ -208,33 +237,39 @@ const CreateInvoice = () => {
         date: new Date(item.date).toISOString(),
         totalAmount: Number(item.quantity) * Number(item.price),
       })),
-      status: (invoiceData.documentType === 'Invoice' || invoiceData.documentType === 'pending') ? 'pending' : "Quotation",
+      status:
+        invoiceData.documentType === "Invoice" ||
+        invoiceData.documentType === "pending"
+          ? "pending"
+          : "Quotation",
       totalAmount: invoiceData.totalAmount,
     };
 
-     save(payload)
+    save(payload);
     // console.log("Saving payload:", payload);
   };
 
   const handlePrint = async () => {
     console.log("Printing invoice...");
     const doc = printRef.current;
-    if(!doc){
+    showSuccess();
+    if (!doc) {
       console.error("No document ref found");
       return;
     }
 
     // Temporarily remove scale from the wrapper to avoid html2canvas capturing bugs
-    const wrapper = document.getElementById('preview-scale-wrapper');
-    const originalClassName = wrapper ? wrapper.className : '';
+    const wrapper = document.getElementById("preview-scale-wrapper");
+    const originalClassName = wrapper ? wrapper.className : "";
     if (wrapper) {
-      wrapper.className = "origin-top flex justify-center w-full transition-transform";
+      wrapper.className =
+        "origin-top flex justify-center w-full transition-transform";
       // Ensure no shadow artifacts are rendered on the canvas
-      doc.classList.remove('shadow-2xl');
-      doc.style.border = 'none';
+      doc.classList.remove("shadow-2xl");
+      doc.style.border = "none";
 
       // Small delay to let the browser paint the unscaled DOM
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
     try {
@@ -243,7 +278,7 @@ const CreateInvoice = () => {
         useCORS: true,
         backgroundColor: "#ffffff",
         windowWidth: doc.scrollWidth,
-        windowHeight: doc.scrollHeight
+        windowHeight: doc.scrollHeight,
       });
 
       const imgData = canvas.toDataURL("image/png");
@@ -265,8 +300,8 @@ const CreateInvoice = () => {
       // Restore the scale classes
       if (wrapper) {
         wrapper.className = originalClassName;
-        doc.classList.add('shadow-2xl');
-        doc.style.border = '';
+        doc.classList.add("shadow-2xl");
+        doc.style.border = "";
       }
     }
   };
@@ -517,7 +552,10 @@ const CreateInvoice = () => {
       {/* RIGHT PANEL - PREVIEW */}
       <div className="w-full lg:w-1/2 p-4 sm:p-6 lg:overflow-y-auto bg-gray-800/5 backdrop-blur flex justify-center items-start [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] overflow-x-auto">
         {/* Scale wrapper to fit standard A4 width on smaller screens */}
-        <div id="preview-scale-wrapper" className="origin-top flex justify-center min-w-max sm:min-w-0 w-full scale-[0.6] sm:scale-75 lg:scale-[0.85] xl:scale-100 transition-transform pb-20">
+        <div
+          id="preview-scale-wrapper"
+          className="origin-top flex justify-center min-w-max sm:min-w-0 w-full scale-[0.6] sm:scale-75 lg:scale-[0.85] xl:scale-100 transition-transform pb-20"
+        >
           <InvoicePreview
             ref={printRef}
             invoiceData={invoiceData}

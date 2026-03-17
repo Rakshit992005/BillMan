@@ -21,10 +21,16 @@ const Home1Left = () => {
       </p>
 
       <div className="flex gap-10">
-        <button onClick={() => navigate('/register')} className="w-30 h-10 bg-(--color-secondary) text-white rounded-full cursor-pointer hover:opacity-90 transition-opacity">
+        <button
+          onClick={() => navigate("/register")}
+          className="w-30 h-10 bg-(--color-secondary) text-white rounded-full cursor-pointer hover:opacity-90 transition-opacity"
+        >
           Get Started
         </button>
-        <button onClick={() => navigate('/login')} className="w-30 h-10 bg-(--color-secondary) text-white rounded-full cursor-pointer hover:opacity-90 transition-opacity">
+        <button
+          onClick={() => navigate("/login")}
+          className="w-30 h-10 bg-(--color-secondary) text-white rounded-full cursor-pointer hover:opacity-90 transition-opacity"
+        >
           Watch Demo
         </button>
       </div>

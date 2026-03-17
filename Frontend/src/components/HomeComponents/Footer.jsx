@@ -13,7 +13,10 @@ const Footer = () => {
           Join hundreds of high-performing freelancers and agencies who trust us
           to manage their revenue.
         </p>
-        <button onClick={() => navigate('/register')} className="bg-white p-3 px-6 text-secondary rounded-2xl font-bold cursor-pointer hover:bg-gray-100 transition-colors">
+        <button
+          onClick={() => navigate("/register")}
+          className="bg-white p-3 px-6 text-secondary rounded-2xl font-bold cursor-pointer hover:bg-gray-100 transition-colors"
+        >
           Get Started
         </button>
       </div>

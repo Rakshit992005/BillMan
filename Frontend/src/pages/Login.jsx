@@ -2,12 +2,27 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [focusedField, setFocusedField] = useState(null);
   const navigate = useNavigate();
   const loginHandler = async (e) => {
     e.preventDefault();
+
+    const showError = () => {
+      toast.error("❌ Invalid credentials!", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+    transition: Bounce,
+  });
+}
     //     console.log("Login Handler");
 
     const email = e.target.email.value;
@@ -29,7 +44,8 @@ const Login = () => {
       }
     } catch (error) {
       //       console.error("Login failed:", error);
-      alert("Invalid credentials");
+      // alert("Invalid credentials");
+      showError();
     }
   };
 
