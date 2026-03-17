@@ -5,15 +5,15 @@ import invoiceModel from "../models/invoice.model.js";
 const createCustomer = async (req, res) => {
     const { name, email, mobile, address } = req.body;
 
-    if (!name || !email || !mobile || !address) {
+    if (!name || !address) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
     try {
         const newCustomer = await customerModel.create({
             name,
-            email,
-            mobile,
+            email: email || "",
+            mobile: mobile || "",
             address,
             userId: req.user.id,
         })
@@ -34,7 +34,7 @@ const createCustomer = async (req, res) => {
 const updateCustomer = async (req, res) => {
     const { name, email, mobile, address } = req.body;
 
-    if (!name || !email || !mobile || !address) {
+    if (!name || !address) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -42,8 +42,8 @@ const updateCustomer = async (req, res) => {
         const customer = await customerModel.findById(req.params.id);
 
         customer.name = name;
-        customer.email = email;
-        customer.mobile = mobile;
+        customer.email = email || "";
+        customer.mobile = mobile || "";
         customer.address = address;
 
         await customer.save();

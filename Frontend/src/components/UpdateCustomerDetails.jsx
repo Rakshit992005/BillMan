@@ -93,7 +93,6 @@ const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="customer@example.com"
-                required
               />
             </div>
             <div>
@@ -105,7 +104,6 @@ const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
                 value={formData.mobile}
                 onChange={handleChange}
                 placeholder="Phone number"
-                required
               />
             </div>
           </div>

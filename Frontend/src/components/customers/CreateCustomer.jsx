@@ -30,7 +30,7 @@ const CreateCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if(!formData.name || !formData.email || !formData.mobile || !formData.address){
+      if(!formData.name || !formData.address){
         alert("Please fill all the fields");
         return;
       }
