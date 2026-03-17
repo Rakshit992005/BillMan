@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col items-center w-full text-white bg-secondary justify-center h-[calc(100vh-600px)] gap-5 ">
@@ -11,7 +13,7 @@ const Footer = () => {
           Join hundreds of high-performing freelancers and agencies who trust us
           to manage their revenue.
         </p>
-        <button className="bg-white p-3 px-6 text-secondary rounded-2xl font-bold">
+        <button onClick={() => navigate('/register')} className="bg-white p-3 px-6 text-secondary rounded-2xl font-bold cursor-pointer hover:bg-gray-100 transition-colors">
           Get Started
         </button>
       </div>
@@ -65,8 +67,24 @@ const Footer = () => {
           <div className="flex flex-col gap-4">
             <h3 className="font-bold text-lg">Connect</h3>
             <div className="flex gap-4 text-xl">
-              <i onClick={() => window.open("https://www.linkedin.com/in/rakshit-diwani-00809728b/", "_blank")} className="fa-brands fa-linkedin hover:text-secondary cursor-pointer transition-colors"></i>
-              <i onClick={() => window.open("https://github.com/Rakshit992005/BillMan", "_blank")} className="fa-brands fa-github hover:text-secondary cursor-pointer transition-colors"></i>
+              <i
+                onClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/rakshit-diwani-00809728b/",
+                    "_blank",
+                  )
+                }
+                className="fa-brands fa-linkedin hover:text-secondary cursor-pointer transition-colors"
+              ></i>
+              <i
+                onClick={() =>
+                  window.open(
+                    "https://github.com/Rakshit992005/BillMan",
+                    "_blank",
+                  )
+                }
+                className="fa-brands fa-github hover:text-secondary cursor-pointer transition-colors"
+              ></i>
             </div>
             <p className="text-text-secondary text-sm">
               Stay updated with our latest news.
