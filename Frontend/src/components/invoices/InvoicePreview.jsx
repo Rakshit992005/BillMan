@@ -79,19 +79,15 @@ const InvoicePreview = forwardRef(
     return (
       <div
         ref={ref}
-        className="bg-black text-white w-[210mm] min-h-[297mm] p-8 font-sans relative border border-gray-700 shadow-2xl shrink-0 mx-auto"
+        className="bg-white text-black w-[210mm] min-h-[297mm] p-8 pt-6 font-sans relative border shrink-0 mx-auto shadow-2xl"
         style={{
-          // Using A4 dimensions and making sure it looks like chalk/dark mode if user wants it,
-          // but wait! Usually invoices are white for printing. The user image is dark, but is it a dark theme or just the blackboard theme sketch?
-          // Since the prompt "make an A4 size paper" for printing, let's use a white background with black text for printing but support the UI.
-          // I will use a white background for the invoice preview so it prints correctly as A4.
-          backgroundColor: "white",
-          color: "black",
-          borderColor: "#ccc",
+          borderColor: "#e5e7eb",
+          // Explicitly set font for consistency in canvas capture
+          fontFamily: "'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
         }}
       >
         {/* Header section */}
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex justify-between items-start mb-1">
           <div className="flex gap-4 items-center">
             <div className="w-16 h-16 rounded-full flex items-center justify-center text-xs font-bold">
               {companyData?.logoUrl ? (
@@ -117,7 +113,7 @@ const InvoicePreview = forwardRef(
           </div>
         </div>
 
-        <div className="text-sm mb-4">
+        <div className="text-sm mb-2">
           <p>
             address:{" "}
             {companyData?.address ||
@@ -125,11 +121,11 @@ const InvoicePreview = forwardRef(
           </p>
         </div>
 
-        <hr className="border-black mb-4 border-t-2" />
+        <hr className="border-black mb-3 border-t-2" />
 
         {/* Invoice Details & QR */}
-        <div className="flex justify-between border-b-2 border-black pb-4 mb-4">
-          <div className="flex flex-col gap-1 w-1/2 border-r-2 border-black pr-4">
+        <div className="flex justify-between border-b-2 border-black pb-2 mb-2">
+          <div className="flex flex-col gap-0.5 w-1/2 border-r-2 border-black pr-4">
             <div className="flex">
               <span className="w-24 font-semibold">invoice no.</span>
               <span>: {invoiceData?.invoiceNumber || ""}</span>
@@ -143,7 +139,7 @@ const InvoicePreview = forwardRef(
                   : ""}
               </span>
             </div>
-            <div className="flex mt-2">
+            <div className="flex mt-1">
               <span className="w-24 font-semibold ">invoice to</span>
               <span className="flex-1 capitalize">
                 : {customer?.name || "---------------------"}
@@ -155,7 +151,7 @@ const InvoicePreview = forwardRef(
                 <span className="flex-1">: {customer.email}</span>
               </div>
             )}
-            <div className="flex mt-2">
+            <div className="flex mt-1">
               <span className="w-24 font-semibold">address</span>
               <span className="flex-1">
                 : {customer?.address || "---------------------"}
@@ -169,7 +165,7 @@ const InvoicePreview = forwardRef(
           </div>
         </div>
 
-        <div className="w-full text-center font-bold text-xl uppercase tracking-widest mb-3">
+        <div className="w-full text-center font-bold text-xl uppercase tracking-widest mb-1">
           {invoiceData?.documentType || "Invoice"}
         </div>
 
@@ -186,78 +182,71 @@ const InvoicePreview = forwardRef(
             <div className="w-24 border-r-2 border-black p-2 text-center">
               date
             </div>
-            <div className="w-16 border-r-2 border-black p-2 text-center">
+            <div className="w-12 border-r-2 border-black p-2 text-center">
               qnt
             </div>
-            <div className="w-24 border-r-2 border-black p-2 text-center">
+            <div className="w-20 border-r-2 border-black p-2 text-center">
               rate
             </div>
-            <div className="w-32 p-2 text-center">amount</div>
+            <div className="w-40 p-2 text-center">amount</div>
           </div>
 
           {/* Table Body */}
-          <div className="flex flex-1 relative">
-            <div className="w-12 border-r-2 border-black p-2 flex flex-col items-center">
-              {invoiceData?.items?.map((item, idx) => (
-                <div key={idx} className="mb-2 h-6">
-                  {idx + 1}
-                </div>
-              ))}
+          <div className="flex-1 flex flex-col min-h-[400px] relative">
+            {/* Background Vertical Lines - Continuous from top to bottom */}
+            <div className="absolute inset-0 flex pointer-events-none border-b-0">
+              <div className="w-12 border-r-2 border-black h-full"></div>
+              <div className="flex-1 border-r-2 border-black h-full"></div>
+              <div className="w-24 border-r-2 border-black h-full"></div>
+              <div className="w-12 border-r-2 border-black h-full"></div>
+              <div className="w-20 border-r-2 border-black h-full"></div>
+              <div className="w-40 h-full"></div>
             </div>
-            <div className="flex-1 border-r-2 border-black p-2 flex flex-col">
+
+            {/* Actual Data Rows */}
+            <div className="relative z-10 flex flex-col">
               {invoiceData?.items?.map((item, idx) => (
-                <div key={idx} className="mb-2 h-6 truncate">
-                  {item.description}
-                </div>
-              ))}
-            </div>
-            <div className="w-24 border-r-2 border-black p-2 flex flex-col items-center text-sm">
-              {invoiceData?.items?.map((item, idx) => (
-                <div key={idx} className="mb-2 h-6">
-                  {item.date ? new Date(item.date).toLocaleDateString() : ""}
-                </div>
-              ))}
-            </div>
-            <div className="w-16 border-r-2 border-black p-2 flex flex-col items-center">
-              {invoiceData?.items?.map((item, idx) => (
-                <div key={idx} className="mb-2 h-6">
-                  {item.quantity}
-                </div>
-              ))}
-            </div>
-            <div className="w-24 border-r-2 border-black p-2 flex flex-col items-end">
-              {invoiceData?.items?.map((item, idx) => (
-                <div key={idx} className="mb-2 h-6">
-                  {item.price}
-                </div>
-              ))}
-            </div>
-            <div className="w-32 p-2 flex flex-col items-end">
-              {invoiceData?.items?.map((item, idx) => (
-                <div key={idx} className="mb-2 h-6">
-                  {item.totalAmount}
+                <div key={idx} className="flex border-b border-transparent transition-colors">
+                  <div className="w-12 p-2 flex items-start justify-center text-sm font-medium">
+                    {idx + 1}
+                  </div>
+                  <div className="flex-1 p-2 text-sm wrap-break-word whitespace-pre-wrap leading-relaxed">
+                    {item.description || "—"}
+                  </div>
+                  <div className="w-24 p-2 text-center text-sm">
+                    {item.date ? new Date(item.date).toLocaleDateString() : "—"}
+                  </div>
+                  <div className="w-12 p-2 text-center text-sm font-medium">
+                    {item.quantity || 0}
+                  </div>
+                  <div className="w-20 p-2 text-right text-sm">
+                    {item.price || 0}
+                  </div>
+                  <div className="w-40 p-2 text-right text-sm font-bold">
+                    {item.totalAmount || 0}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Total Row */}
-          <div className="flex border-t-2 border-black font-semibold">
-            <div className="flex-1 border-r-2 border-black p-2 text-right">
-              total
+          <div className="flex border-t-2 border-black font-bold" style={{ backgroundColor: "#f9fafb" }}>
+            <div className="flex-1 border-r-2 border-black p-3 text-right uppercase tracking-wider">
+              total amount
             </div>
-            <div className="w-32 p-2 text-right">
-              {invoiceData?.totalAmount || 0}
+            <div className="w-40 p-3 text-right text-lg">
+               ₹{invoiceData?.totalAmount || 0}/-
             </div>
           </div>
         </div>
 
         {/* Amount in Words */}
-        <div className="mt-4 text-sm flex gap-2">
-          <span className="font-semibold">in words:</span>
-          <span className="flex-1 border-b border-black">
+        <div className="mt-6 text-sm flex items-start gap-4">
+          <span className="font-bold uppercase text-xs tracking-widest pt-1" style={{ color: "#6b7280" }}>in words:</span>
+          <div className="flex-1 border-b-2 pb-1.5 font-semibold leading-snug wrap-break-word" style={{ borderColor: "rgba(0,0,0,0.8)", color: "#1f2937" }}>
             {numberToWords(invoiceData?.totalAmount)}
-          </span>
+          </div>
         </div>
 
         {/* Footer */}

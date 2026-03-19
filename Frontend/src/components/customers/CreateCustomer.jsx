@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputField from "../InputField";
 import axios from "axios";
 
-const CreateCustomer = () => {
+const CreateCustomer = ({ onCustomerCreated }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,6 +42,7 @@ const CreateCustomer = () => {
       // console.log(response.data);
       if (response.status === 201) {
         handleClear();
+        if (onCustomerCreated) onCustomerCreated();
       }
     } catch (error) {
               console.log(error);

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-const CustomerList = () => {
+const CustomerList = ({ refreshTrigger }) => {
   // Mock data based on the requested structure
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
@@ -28,7 +28,7 @@ const CustomerList = () => {
       }
     };
     fetchCustomers();
-  }, []);
+  }, [refreshTrigger]);
 
   const detailsHandler = (e) => {
     // console.log(e.target.closest("[data-id]"));
@@ -45,7 +45,7 @@ const CustomerList = () => {
   );
 
   return (
-    <div className="bg-white rounded-[2rem] border border-gray-100/60 shadow-xl shadow-gray-200/40 overflow-hidden">
+    <div className="bg-white rounded-4xl border border-gray-100/60 shadow-xl shadow-gray-200/40 overflow-hidden">
       {/* Top Toolbar */}
       <div className="px-10 py-8 flex items-center border-b border-gray-50/50">
         <div className="relative flex-1 group max-w-xl">

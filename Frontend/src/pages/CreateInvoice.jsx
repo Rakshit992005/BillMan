@@ -238,10 +238,11 @@ const CreateInvoice = () => {
         totalAmount: Number(item.quantity) * Number(item.price),
       })),
       status:
-        invoiceData.documentType === "Invoice" ||
-        invoiceData.documentType === "pending"
-          ? "pending"
-          : "Quotation",
+        invoiceData.documentType === "Quotation"
+          ? "Quotation"
+          : invoiceData.status && invoiceData.status !== "Quotation"
+          ? invoiceData.status
+          : "pending",
       totalAmount: invoiceData.totalAmount,
     };
 
@@ -268,8 +269,8 @@ const CreateInvoice = () => {
       doc.classList.remove("shadow-2xl");
       doc.style.border = "none";
 
-      // Small delay to let the browser paint the unscaled DOM
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      // Slightly longer delay to let the browser paint the unscaled DOM and fonts
+      await new Promise((resolve) => setTimeout(resolve, 250));
     }
 
     try {
@@ -277,8 +278,10 @@ const CreateInvoice = () => {
         scale: 2,
         useCORS: true,
         backgroundColor: "#ffffff",
-        windowWidth: doc.scrollWidth,
-        windowHeight: doc.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: doc.scrollWidth || 1000,
+        windowHeight: doc.scrollHeight || 1400,
       });
 
       const imgData = canvas.toDataURL("image/png");
