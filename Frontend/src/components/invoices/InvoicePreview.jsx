@@ -158,10 +158,11 @@ const InvoicePreview = forwardRef(
               </span>
             </div>
           </div>
-          <div className="w-1/2 flex justify-center items-center">
+          <div className="w-1/2 flex flex-col justify-center items-center gap-1">
             <div className="w-28 h-28 border-2 border-black rounded-lg flex items-center justify-center text-sm font-semibold">
-              <QRGenerator value={invoiceData?.invoiceNumber} />
+              <QRGenerator value={invoiceData} upiId={companyData?.upiId} companyName={companyData?.companyName} payeeName={companyData?.name} />
             </div>
+            <p className="text-[10px] font-black uppercase tracking-widest">pay using qr</p>
           </div>
         </div>
 
@@ -268,6 +269,12 @@ const InvoicePreview = forwardRef(
               Account No :{" "}
               <span className="font-semibold">
                 {companyData?.accountNo || ""}
+              </span>
+            </div>
+            <div>
+              UPI ID :{" "}
+              <span className="font-semibold">
+                {companyData?.upiId || ""}
               </span>
             </div>
             <div>

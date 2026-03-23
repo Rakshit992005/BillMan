@@ -84,6 +84,7 @@ const CreateInvoice = () => {
         accountNo: user.bankDetails?.accountNumber || "",
         panNumber: user.bankDetails?.panNumber.toUpperCase() || "",
         ifsc: user.bankDetails?.ifscCode.toUpperCase() || "",
+        upiId: user.bankDetails?.upiId || "",
         logoUrl: user.logoUrl || "",
         stampUrl: user.stampUrl || "",
       });

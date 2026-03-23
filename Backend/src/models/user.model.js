@@ -21,6 +21,10 @@ const bankDetailsSchema = new mongoose.Schema({
     panNumber: {
         type: String,
         required: true
+    },
+    upiId: {
+        type: String,
+        required: true
     }
 })
 

@@ -8,6 +8,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
     email: "",
     mobile: "",
     address: "",
+    upiId: "",
   });
 
   const handleChange = (e) => {
@@ -24,6 +25,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
       email: "",
       mobile: "",
       address: "",
+      upiId: "",
     });
   };
 
@@ -81,7 +83,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
           </div>
 
           {/* Inputs Row */}
-          <div className="px-10 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="px-10 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <InputField
               label="Full Name"
               name="name"
@@ -109,6 +111,13 @@ const CreateCustomer = ({ onCustomerCreated }) => {
               name="address"
               placeholder="City, Country"
               value={formData.address}
+              onChange={handleChange}
+            />
+            <InputField
+              label="UPI ID"
+              name="upiId"
+              placeholder="UPI ID (optional)"
+              value={formData.upiId}
               onChange={handleChange}
             />
           </div>

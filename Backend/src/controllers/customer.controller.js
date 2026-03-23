@@ -3,7 +3,7 @@ import invoiceModel from "../models/invoice.model.js";
 
 
 const createCustomer = async (req, res) => {
-    const { name, email, mobile, address } = req.body;
+    const { name, email, mobile, address, upiId } = req.body;
 
     if (!name || !address) {
         return res.status(400).json({ message: "All fields are required" });
@@ -16,6 +16,9 @@ const createCustomer = async (req, res) => {
             mobile: mobile || "",
             address,
             userId: req.user.id,
+            bankDetails: {
+                upiId: upiId || ""
+            }
         })
 
         return res.status(201).json({
@@ -32,7 +35,7 @@ const createCustomer = async (req, res) => {
 
 }
 const updateCustomer = async (req, res) => {
-    const { name, email, mobile, address } = req.body;
+    const { name, email, mobile, address, upiId } = req.body;
 
     if (!name || !address) {
         return res.status(400).json({ message: "All fields are required" });
@@ -45,6 +48,7 @@ const updateCustomer = async (req, res) => {
         customer.email = email || "";
         customer.mobile = mobile || "";
         customer.address = address;
+        customer.bankDetails.upiId = upiId || "";
 
         await customer.save();
 
@@ -81,7 +85,7 @@ const getAmounts = async (id) => {
 
 const getAllCustomers = async (req, res) => {
     try {
-        const customers = await customerModel.find({ userId: req.user.id }).select('_id name email mobile address paidAmount unpaidAmount totalAmount');
+        const customers = await customerModel.find({ userId: req.user.id }).select('_id name email mobile address paidAmount unpaidAmount totalAmount bankDetails');
 
         return res.status(200).json({
             message: "Customers fetched successfully",

@@ -17,6 +17,7 @@ const RegisterPage = () => {
     ifscCode: "",
     branchName: "",
     panNumber: "",
+    upiId: "",
     agreeToTerms: false,
     logo: null,
     stamp: null,
@@ -486,20 +487,36 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            <div className="space-y-2 mb-8">
-              <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                PAN Number <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="panNumber"
-                required
-                placeholder="ABCDE1234F"
-                className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                value={formData.panNumber}
-                onChange={handleInputChange}
-              />
-            </div>
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                    PAN Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="panNumber"
+                    required
+                    placeholder="ABCDE1234F"
+                    className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                    value={formData.panNumber}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
+                    UPI ID <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="upiId"
+                    required
+                    placeholder="7506283831@ybl"
+                    className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                    value={formData.upiId}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
           </section>
 
           {/* Section: Security & Access */}

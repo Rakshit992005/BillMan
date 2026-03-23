@@ -207,6 +207,10 @@ const Profile = () => {
                                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">PAN Number</p>
                                     <p className="text-[14px] font-bold text-gray-800">{user.bankDetails.panNumber}</p>
                                 </div>
+                                <div>
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">UPI ID</p>
+                                    <p className="text-[14px] font-bold text-gray-800">{user.bankDetails.upiId}</p>
+                                </div>
                             </div>
                         </div>
                       </div>
@@ -331,6 +335,10 @@ const Profile = () => {
                         <div>
                           <label className={labelClassName}>PAN Number</label>
                           <input name="panNumber" type="text" className={inputClassName} defaultValue={user.bankDetails?.panNumber} placeholder="PAN number" required />
+                        </div>
+                        <div>
+                          <label className={labelClassName}>UPI ID</label>
+                          <input name="upiId" type="text" className={inputClassName} defaultValue={user.bankDetails?.upiId} placeholder="UPI ID" required />
                         </div>
                       </div>
                   </div>
