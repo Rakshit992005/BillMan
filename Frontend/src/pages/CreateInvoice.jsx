@@ -138,7 +138,7 @@ const CreateInvoice = () => {
 
     const cust = customers.find((c) => c._id === cid);
     if (cust) {
-      setCustomerSearch(`${cust.name} (${cust.email})`);
+      setCustomerSearch(cust.name);
     }
   };
 
@@ -146,7 +146,7 @@ const CreateInvoice = () => {
     if (selectedCustomerId && customers.length > 0) {
       const cust = customers.find((c) => c._id === selectedCustomerId);
       if (cust) {
-        setCustomerSearch(`${cust.name} (${cust.email})`);
+        setCustomerSearch(cust.name);
       }
     }
   }, [selectedCustomerId, customers]);
@@ -168,7 +168,7 @@ const CreateInvoice = () => {
     }));
   };
 
-  const adItemRow = () => {
+  const addItemRow = () => {
     setInvoiceData((prev) => ({
       ...prev,
       items: [
@@ -360,6 +360,7 @@ const CreateInvoice = () => {
                 setTimeout(() => setShowCustomerDropdown(false), 200)
               }
               placeholder="Search name or email..."
+              autoComplete="off"
               className="w-full bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 block p-4 font-medium transition-all"
               required={!selectedCustomerId}
             />
@@ -369,7 +370,7 @@ const CreateInvoice = () => {
                   filteredCustomers.map((cust) => (
                     <div
                       key={cust._id}
-                      onClick={() => handleSelectCustomer(cust._id)}
+                      onMouseDown={() => handleSelectCustomer(cust._id)}
                       className="p-4 hover:bg-indigo-50/50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors"
                     >
                       <div className="font-bold text-gray-800">{cust.name}</div>
@@ -481,7 +482,7 @@ const CreateInvoice = () => {
           </div>
 
           <button
-            onClick={adItemRow}
+            onClick={addItemRow}
             className="mt-2 w-full py-4 rounded-xl border-2 border-dashed border-gray-200 text-gray-500 font-bold hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all flex items-center justify-center gap-2"
           >
             <svg

@@ -10,7 +10,7 @@ const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
     email: customer?.email || "",
     mobile: customer?.mobile || "",
     address: customer?.address || "",
-    upiId: customer?.bankDetails?.upiId || "",
+
   });
 
   const [isUpdating, setIsUpdating] = useState(false);
@@ -107,17 +107,7 @@ const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
                 placeholder="Phone number"
               />
             </div>
-            <div className="col-span-1 md:col-span-2">
-              <label className={labelClassName}>UPI ID</label>
-              <input
-                name="upiId"
-                type="text"
-                className={inputClassName}
-                value={formData.upiId}
-                onChange={handleChange}
-                placeholder="UPI ID (optional)"
-              />
-            </div>
+
           </div>
 
           <div>

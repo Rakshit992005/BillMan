@@ -37,12 +37,7 @@ const customerSchema = new mongoose.Schema({
         ref: 'User',
         required:true,
     },
-    bankDetails: {
-        upiId: {
-            type: String,
-            default: ""
-        }
-    }
+
 }, {
     timestamps:true,
 });

@@ -8,7 +8,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
     email: "",
     mobile: "",
     address: "",
-    upiId: "",
+
   });
 
   const handleChange = (e) => {
@@ -25,7 +25,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
       email: "",
       mobile: "",
       address: "",
-      upiId: "",
+
     });
   };
 
@@ -113,13 +113,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
               value={formData.address}
               onChange={handleChange}
             />
-            <InputField
-              label="UPI ID"
-              name="upiId"
-              placeholder="UPI ID (optional)"
-              value={formData.upiId}
-              onChange={handleChange}
-            />
+
           </div>
 
           {/* Footer Actions */}
