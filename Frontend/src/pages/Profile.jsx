@@ -172,6 +172,30 @@ const Profile = () => {
                         {user.address || "Not provided"}
                       </p>
                     </div>
+                    <div>
+                      <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                        Invoice Suffix
+                      </h3>
+                      <p className="text-[15px] font-bold text-gray-800">
+                        {user.invoiceSuffix || "None"}
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                        Invoice Suffix
+                      </h3>
+                      <p className="text-[15px] font-bold text-gray-800">
+                        {user.invoiceSuffix || "None"}
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                        Invoice Suffix
+                      </h3>
+                      <p className="text-[15px] font-bold text-gray-800">
+                        {user.invoiceSuffix || "None"}
+                      </p>
+                    </div>
                     {user.stampUrl && (
                       <div>
                         <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
@@ -284,6 +308,16 @@ const Profile = () => {
                         defaultValue={user.mobile}
                         placeholder="Phone number"
                         required
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClassName}>Invoice Suffix</label>
+                      <input
+                        name="invoiceSuffix"
+                        type="text"
+                        className={inputClassName}
+                        defaultValue={user.invoiceSuffix}
+                        placeholder="e.g. for Services"
                       />
                     </div>
                   </div>

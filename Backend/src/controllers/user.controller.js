@@ -8,7 +8,7 @@ const userRegister = async (req, res) => {
     const files = req.files;
     console.log("files:", files);
     console.log("req.body:", req.body);
-    const { name, email, companyName, address, mobile, password, bankName, accountNumber, ifscCode, branchName, panNumber, upiId } = req.body;
+    const { name, email, companyName, address, mobile, password, bankName, accountNumber, ifscCode, branchName, panNumber, upiId, invoiceSuffix } = req.body;
 
     if (!name || !email || !companyName || !address || !mobile || !password || !bankName || !accountNumber || !ifscCode || !branchName || !panNumber || !upiId) {
         return res.status(400).json({ message: "All fields are required" });
@@ -46,7 +46,8 @@ const userRegister = async (req, res) => {
                 branchName,
                 panNumber,
                 upiId,
-            }
+            },
+            invoiceSuffix: invoiceSuffix || ""
         });
 
         const option = {
@@ -79,7 +80,8 @@ const userRegister = async (req, res) => {
                     branchName,
                     panNumber,
                     upiId,
-                }
+                },
+                invoiceSuffix: invoiceSuffix || ""
             }
         })
     } catch (error) {
@@ -134,7 +136,8 @@ const userLogin = async (req, res) => {
                 mobile: user.mobile,
                 bankDetails: user.bankDetails,
                 logoUrl: user.logoUrl,
-                stampUrl: user.stampUrl
+                stampUrl: user.stampUrl,
+                invoiceSuffix: user.invoiceSuffix || ""
             }
         })
 
@@ -194,7 +197,7 @@ const changePassword = async (req, res) => {
 }
 
 const updateUserDetails = async (req, res) => {
-    const { name, companyName, address, mobile, bankName, accountNumber, ifscCode, branchName, panNumber, upiId } = req.body;
+    const { name, companyName, address, mobile, bankName, accountNumber, ifscCode, branchName, panNumber, upiId, invoiceSuffix } = req.body;
 
     if (!name || !companyName || !address || !mobile || !bankName || !accountNumber || !ifscCode || !branchName || !panNumber || !upiId) {
         return res.status(400).json({ message: "All fields are required" });
@@ -225,6 +228,7 @@ const updateUserDetails = async (req, res) => {
         user.bankDetails.branchName = branchName;
         user.bankDetails.panNumber = panNumber;
         user.bankDetails.upiId = upiId;
+        user.invoiceSuffix = invoiceSuffix || "";
 
         await user.save();
 
@@ -236,7 +240,8 @@ const updateUserDetails = async (req, res) => {
             mobile: user.mobile,
             logoUrl: user.logoUrl,
             stampUrl: user.stampUrl,
-            bankDetails: user.bankDetails
+            bankDetails: user.bankDetails,
+            invoiceSuffix: user.invoiceSuffix || ""
         }});
     } catch (error) {
         return res.status(500).json({ message: "Internal server error while updating user details", error: error.message });

@@ -167,7 +167,7 @@ const InvoicePreview = forwardRef(
         </div>
 
         <div className="w-full text-center font-bold text-xl uppercase tracking-widest mb-1">
-          {invoiceData?.documentType || "Invoice"}
+          {invoiceData?.documentType || "Invoice"} {companyData?.invoiceSuffix ? `for ${companyData.invoiceSuffix}` : ""}
         </div>
 
         {/* Table */}

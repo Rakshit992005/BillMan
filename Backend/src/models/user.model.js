@@ -65,6 +65,10 @@ const userSchema = new mongoose.Schema({
     bankDetails: {
         type: bankDetailsSchema,
         required: false,
+    },
+    invoiceSuffix: {
+        type: String,
+        required: false,
     }
 },
     {

@@ -18,6 +18,7 @@ const RegisterPage = () => {
     branchName: "",
     panNumber: "",
     upiId: "",
+    invoiceSuffix: "",
     agreeToTerms: false,
     logo: null,
     stamp: null,
@@ -282,6 +283,20 @@ const RegisterPage = () => {
                 onChange={handleInputChange}
               />
             </div>
+            
+            <div className="space-y-2 mb-8">
+              <label className="text-sm font-bold text-gray-600">
+                Invoice Suffix (e.g. for Services, for Products)
+              </label>
+              <input
+                type="text"
+                name="invoiceSuffix"
+                placeholder="e.g. for Hardware Solutions"
+                className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                value={formData.invoiceSuffix}
+                onChange={handleInputChange}
+              />
+            </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               {/* Logo Upload */}
@@ -510,7 +525,7 @@ const RegisterPage = () => {
                     type="text"
                     name="upiId"
                     required
-                    placeholder="7506283831@ybl"
+                    placeholder="157*****52@ybl"
                     className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                     value={formData.upiId}
                     onChange={handleInputChange}
