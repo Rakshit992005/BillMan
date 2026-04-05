@@ -53,7 +53,7 @@ const CustomerDetails = () => {
       setCustomer(response.data.customer);
       setInvoices(response.data.invoices);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

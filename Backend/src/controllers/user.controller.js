@@ -4,10 +4,10 @@ import userModel from "../models/user.model.js";
 import uploadFile from "../utils/imagekit.js";
 
 const userRegister = async (req, res) => {
-    console.log("reached");
+    // console.log("reached");
     const files = req.files;
-    console.log("files:", files);
-    console.log("req.body:", req.body);
+    // console.log("files:", files);
+    // console.log("req.body:", req.body);
     const { name, email, companyName, address, mobile, password, bankName, accountNumber, ifscCode, branchName, panNumber, upiId, invoiceSuffix } = req.body;
 
     if (!name || !email || !companyName || !address || !mobile || !password || !bankName || !accountNumber || !ifscCode || !branchName || !panNumber || !upiId) {
@@ -29,7 +29,7 @@ const userRegister = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const logoUrl = await uploadFile(files.logo[0].buffer.toString("base64"));
         const stampUrl = await uploadFile(files.stamp[0].buffer.toString("base64"));
-        console.log(logoUrl, stampUrl);
+        // console.log(logoUrl, stampUrl);
         const newUser = await userModel.create({
             name,
             email,

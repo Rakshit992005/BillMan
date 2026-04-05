@@ -253,7 +253,7 @@ const CreateInvoice = () => {
   };
 
   const handlePrint = async () => {
-    console.log("Printing invoice...");
+    // console.log("Printing invoice...");
     const doc = printRef.current;
     showSuccess();
     if (!doc) {
