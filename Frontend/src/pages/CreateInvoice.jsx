@@ -208,8 +208,6 @@ const CreateInvoice = () => {
     });
   };
 
-  
-
   const save = async (payload) => {
     try {
       const response = await axios.post(
@@ -241,10 +239,12 @@ const CreateInvoice = () => {
       })),
       status:
         invoiceData.documentType === "Quotation"
-          ? "Quotation"
-          : invoiceData.status && invoiceData.status !== "Quotation"
-          ? invoiceData.status
-          : "pending",
+          ? "quotation"
+          : invoiceData.status &&
+              invoiceData.status !== "Quotation" &&
+              invoiceData.status !== "quotation"
+            ? invoiceData.status
+            : "pending",
       totalAmount: invoiceData.totalAmount,
     };
 
