@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json({limit:"50mb"}));
 app.use(cookieParser());
 app.use(cors({
-    origin: "https://bill-man.vercel.app/",
+    origin: "https://bill-man.vercel.app",
     credentials: true
 }));
 app.use(express.urlencoded({limit:"50mb", extended: true }));
