@@ -127,5 +127,6 @@ export {
     createCustomer,
     getAllCustomers,
     getCustomerById,
-    updateCustomer
+    updateCustomer,
+    getAmounts
 }

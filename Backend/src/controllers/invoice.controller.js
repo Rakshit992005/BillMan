@@ -1,5 +1,6 @@
 import invoiceModel from "../models/invoice.model.js";
 import mongoose from "mongoose";
+import { getAmounts } from "./customer.controller.js";
 
 const createInvoice = async (req, res) => {
     const { invoiceNumber, date, customerId, items, status } = req.body;
@@ -19,6 +20,7 @@ const createInvoice = async (req, res) => {
                 { items: items, totalAmount: totalAmount, status: status },
                 { returnDocument: "after" }
             );
+            await getAmounts(updatedInvoice.customerId);
             return res.status(200).json({ message: "Invoice updated successfully", updatedInvoice });
         }
 
@@ -31,6 +33,8 @@ const createInvoice = async (req, res) => {
             totalAmount,
             status,
         })
+
+        await getAmounts(newInvoice.customerId);
 
         return res.status(201).json({ message: "Invoice created successfully", newInvoice });
 
@@ -126,6 +130,8 @@ const stausPaid = async (req, res) => {
             });
         }
 
+        await getAmounts(updatedInvoice.customerId);
+
         return res.status(200).json({
             message: "Invoice status updated successfully",
             updatedInvoice
@@ -154,6 +160,8 @@ const deleteByid = async (req, res) => {
                 message: "Invoice not found"
             });
         }
+
+        await getAmounts(deletedInvoice.customerId);
 
         return res.status(200).json({
             message: "Invoice deleted successfully",
