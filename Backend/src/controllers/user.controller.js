@@ -53,7 +53,7 @@ const userRegister = async (req, res) => {
         const option = {
             httpOnly: true,
             secure: true,
-            sameSite: "strict",
+            sameSite: "none",
             maxAge: 15 * 60 * 60 * 1000
         }
 
@@ -121,7 +121,7 @@ const userLogin = async (req, res) => {
         const option = {
             httpOnly: true,
             secure: true,
-            sameSite: "strict",
+            sameSite: "none",
             maxAge: 15 * 60 * 60 * 1000
         }
         res.cookie("token", token, option);
@@ -159,7 +159,7 @@ const userLogout = async (req, res) => {
     const option = {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "none",
         maxAge: 15 * 60 * 60 * 1000
     }
     res.clearCookie("token", option);
