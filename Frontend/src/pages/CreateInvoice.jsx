@@ -298,7 +298,10 @@ const CreateInvoice = () => {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("invoice.pdf");
+      
+      const customerName = customers.find((c) => c._id === selectedCustomerId)?.name || "Customer";
+      const invoiceNo = invoiceData?.invoiceNumber || "Invoice";
+      pdf.save(`${customerName},${invoiceNo}.pdf`);
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
