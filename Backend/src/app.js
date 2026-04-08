@@ -24,4 +24,8 @@ app.use('/api/invoice' , invoiceRoutes );
 
 app.use("/api/dashboard" , dashboardRoutes);
 
+app.get("/ping", (req, res) => {
+  res.status(200).send("OK");
+});
+
 export default app;
