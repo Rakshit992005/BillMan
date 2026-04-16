@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -28,6 +28,11 @@ const NavBar = () => {
     }
   };
 
+  const navLinkClass = ({ isActive }) =>
+    isActive
+      ? "text-(--text-primary) font-bold border-b-2 border-(--text-primary) pb-1"
+      : "hover:text-(--text-primary) transition-colors pb-1";
+
   return (
     <div className="bg-(--bg-primary) border-b-2 border-(--border-primary) text-(--text-primary) p-2 flex justify-between sticky top-0 items-center z-50 w-full">
       <div className="flex items-center text-2xl font-semibold">
@@ -42,40 +47,52 @@ const NavBar = () => {
       <div className="">
         <ul className={`flex pr-5 gap-5 text-(--text-secondary) items-center`}>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink to="/" className={navLinkClass}>
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <NavLink to="/dashboard" className={navLinkClass}>
+              Dashboard
+            </NavLink>
           </li>
           <li>
-            <Link to="/customer">Customer</Link>
+            <NavLink to="/customer" className={navLinkClass}>
+              Customer
+            </NavLink>
           </li>
           <li>
-            <Link to="/invoices">Invoices</Link>
+            <NavLink to="/invoices" className={navLinkClass}>
+              Invoices
+            </NavLink>
           </li>
           <li>
-            <Link to="/createinvoice">Create Invoice</Link>
+            <NavLink to="/createinvoice" className={navLinkClass}>
+              Create Invoice
+            </NavLink>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
+            <NavLink to="/profile" className={navLinkClass}>
+              Profile
+            </NavLink>
           </li>
           {isAuthenticated ? (
             <li>
               <button
                 onClick={handleLogout}
-                className="cursor-pointer hover:text-red-500 transition-colors"
+                className="cursor-pointer hover:text-red-500 transition-colors pb-1"
               >
                 Logout
               </button>
             </li>
           ) : (
             <li>
-              <Link
+              <NavLink
                 to="/login"
-                className="hover:text-primary transition-colors"
+                className={navLinkClass}
               >
                 Login
-              </Link>
+              </NavLink>
             </li>
           )}
         </ul>
