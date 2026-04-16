@@ -215,7 +215,7 @@ const InvoicePreview = forwardRef(
                     {item.description || "—"}
                   </div>
                   <div className="w-24 p-2 text-center text-sm">
-                    {item.date ? new Date(item.date).toLocaleDateString() : "—"}
+                    {item.date ? new Date(item.date).toLocaleDateString() : ""}
                   </div>
                   <div className="w-12 p-2 text-center text-sm font-medium">
                     {item.quantity || 0}

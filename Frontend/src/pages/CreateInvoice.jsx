@@ -32,7 +32,7 @@ const CreateInvoice = () => {
           id: item.id || item._id || Math.random(),
           date: item.date
             ? new Date(item.date).toISOString().substring(0, 10)
-            : new Date().toISOString().substring(0, 10),
+            : "",
         })) || [],
     };
   };
@@ -54,7 +54,7 @@ const CreateInvoice = () => {
             description: "",
             quantity: 1,
             price: 0,
-            date: new Date().toISOString().substring(0, 10),
+            date: "",
             totalAmount: 0,
           },
         ],
@@ -179,7 +179,7 @@ const CreateInvoice = () => {
           description: "",
           quantity: 1,
           price: 0,
-          date: new Date().toISOString().substring(0, 10),
+          date: "",
           totalAmount: 0,
         },
       ],
@@ -234,7 +234,7 @@ const CreateInvoice = () => {
         description: item.description,
         quantity: Number(item.quantity),
         price: Number(item.price),
-        date: new Date(item.date).toISOString(),
+        date: item.date ? new Date(item.date).toISOString() : null,
         totalAmount: Number(item.quantity) * Number(item.price),
       })),
       status:
