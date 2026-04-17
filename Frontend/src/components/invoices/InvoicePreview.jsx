@@ -152,9 +152,8 @@ const InvoicePreview = forwardRef(
               </div>
             )}
             <div className="flex mt-1">
-              <span className="w-24 font-semibold">address</span>
-              <span className="flex-1">
-                : {customer?.address || "---------------------"}
+              <span className="align-center capitalize" >
+                : {customer?.address }
               </span>
             </div>
           </div>
@@ -244,7 +243,7 @@ const InvoicePreview = forwardRef(
 
         {/* Amount in Words */}
         <div className="mt-6 text-sm flex items-start gap-4">
-          <span className="font-bold uppercase text-xs tracking-widest pt-1" style={{ color: "#6b7280" }}>in words:</span>
+          <span className="font-bold uppercase text-xs tracking-widest pt-1" style={{ color: "#ffffff" }}>in words:</span>
           <div className="flex-1 border-b-2 pb-1.5 font-semibold leading-snug wrap-break-word" style={{ borderColor: "rgba(0,0,0,0.8)", color: "#1f2937" }}>
             {numberToWords(invoiceData?.totalAmount)}
           </div>
