@@ -113,11 +113,9 @@ const InvoicePreview = forwardRef(
           </div>
         </div>
 
-        <div className="text-sm mb-2">
+        <div className="text-sm mb-2 capitalize align-center justify-center">
           <p>
-            address:{" "}
-            {companyData?.address ||
-              "..........................................................."}
+            {companyData?.address }
           </p>
         </div>
 
@@ -152,8 +150,9 @@ const InvoicePreview = forwardRef(
               </div>
             )}
             <div className="flex mt-1">
-              <span className="align-center capitalize" >
-                : {customer?.address }
+              <span className="w-24 font-semibold">address</span>
+              <span className="flex-1">
+                : {customer?.address || "---------------------"}
               </span>
             </div>
           </div>
