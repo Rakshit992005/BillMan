@@ -113,9 +113,9 @@ const InvoicePreview = forwardRef(
           </div>
         </div>
 
-        <div className="text-sm mb-2 capitalize align-center justify-center">
+        <div className="text-sm mb-2 capitalize text-center">
           <p>
-            {companyData?.address }
+            {companyData?.address}
           </p>
         </div>
 
