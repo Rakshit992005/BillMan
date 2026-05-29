@@ -3,6 +3,16 @@ import QRGenerator from "../QRGenerator";
 
 const InvoicePreview = forwardRef(
   ({ invoiceData, customer, companyData }, ref) => {
+    const formatDate = (dateStr) => {
+      if (!dateStr) return "";
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return "";
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
     const numberToWords = (num) => {
       if (!num || num === 0) return "Rupees Zero Only";
       const a = [
@@ -130,12 +140,7 @@ const InvoicePreview = forwardRef(
             </div>
             <div className="flex">
               <span className="w-24 font-semibold">date</span>
-              <span>
-                :{" "}
-                {invoiceData?.date
-                  ? new Date(invoiceData.date).toLocaleDateString()
-                  : ""}
-              </span>
+              <span>: {formatDate(invoiceData?.date)}</span>
             </div>
             <div className="flex mt-1">
               <span className="w-24 font-semibold ">invoice to</span>
@@ -213,7 +218,7 @@ const InvoicePreview = forwardRef(
                     {item.description || "—"}
                   </div>
                   <div className="w-24 p-2 text-center text-sm">
-                    {item.date ? new Date(item.date).toLocaleDateString() : ""}
+                    {formatDate(item.date)}
                   </div>
                   <div className="w-12 p-2 text-center text-sm font-medium">
                     {item.quantity || 0}
