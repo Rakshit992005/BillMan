@@ -62,7 +62,7 @@ const getAllInvoices = async (req, res) => {
             filter.status = status;
         }
 
-        const invoices = await invoiceModel.find(filter).sort({ createdAt: -1 });
+        const invoices = await invoiceModel.find(filter).populate('customerId', 'name').sort({ createdAt: -1 });
 
         return res.status(200).json({
             message: "Invoices fetched successfully",

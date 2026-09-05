@@ -47,9 +47,12 @@ const InvoiceListItem = ({ invoice, onStatusChange, onDelete }) => {
           </svg>
         </div>
         <div>
-          <h4 className="font-bold text-dark text-lg">
-            {invoice.invoiceNumber}
+          <h4 className="font-bold text-dark text-lg capitalize">
+            {invoice.customerId?.name || "Unknown Customer"}
           </h4>
+          <p className="text-xs font-semibold text-primary/80 uppercase tracking-wide">
+            {invoice.status === "quotation" ? "Quotation" : "Invoice"} #{invoice.invoiceNumber}
+          </p>
           <p className="text-sm text-(--text-secondary)">
             {new Date(invoice.date).toLocaleDateString("en-IN", {
               day: "numeric",
