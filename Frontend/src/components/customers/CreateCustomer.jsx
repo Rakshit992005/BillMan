@@ -52,7 +52,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
   };
 
   return (
-    <div className="p-10 max-w-[1400px] mx-auto space-y-10">
+    <div className="p-4 sm:p-6 md:p-10 max-w-[1400px] mx-auto space-y-6 md:space-y-10">
       {/* Page Header */}
       <div>
         <h1 className="text-4xl font-extrabold text-[#111827]">Customers</h1>
@@ -65,7 +65,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
       <div className="bg-white rounded-[2rem] border border-gray-100/60 shadow-xl overflow-hidden shadow-gray-200/40">
         <form onSubmit={handleSubmit}>
           {/* Header with Icon */}
-          <div className="px-10 py-7 border-b border-gray-50 flex items-center gap-2">
+          <div className="px-4 sm:px-6 md:px-10 py-5 md:py-7 border-b border-gray-50 flex items-center gap-2">
             <svg
               className="w-5 h-5 text-[#4F46E5] stroke-[2.5]"
               viewBox="0 0 24 24"
@@ -83,7 +83,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
           </div>
 
           {/* Inputs Row */}
-          <div className="px-10 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="px-4 sm:px-6 md:px-10 py-6 md:py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <InputField
               label="Full Name"
               name="name"
@@ -117,7 +117,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
           </div>
 
           {/* Footer Actions */}
-          <div className="px-10 py-8 flex items-center justify-end gap-10 mt-2">
+          <div className="px-4 sm:px-6 md:px-10 py-6 md:py-8 flex flex-col sm:flex-row items-center justify-end gap-4 sm:gap-10 mt-2">
             <button
               type="button"
               onClick={handleClear}

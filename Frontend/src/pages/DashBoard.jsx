@@ -107,7 +107,7 @@ const DashBoard = () => {
   return (
     <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in text-gray-800">
       {/* HEADER */}
-      <div className="flex justify-between items-center bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50">
         <div>
           <h1 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-indigo-400 tracking-tight">
             Dashboard Overview
@@ -183,7 +183,7 @@ const DashBoard = () => {
       <div className="flex flex-col xl:flex-row gap-6">
         {/* GRAPH SECTION */}
         <div className="xl:w-[55%] 2xl:w-2/3 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col min-h-[400px]">
-          <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-gray-100 pb-4">
             <div>
               <h2 className="text-xl font-extrabold text-gray-800">Revenue Analytics</h2>
               <p className="text-sm text-gray-500 font-medium pt-1">Visualize your earnings over time</p>
@@ -201,17 +201,16 @@ const DashBoard = () => {
               </select>
             </div>
           </div>
-          <div className="grow flex items-center justify-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 p-4">
-            {/* Space left for the graph component */}
-            <div className="w-full h-full flex flex-col justify-center items-center">
-              <Graph range={graphRange} className="w-full h-full"/>
+          <div className="grow w-full bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 min-w-0 min-h-[300px] relative">
+            <div className="absolute inset-0 p-2 sm:p-4 w-full h-full">
+              <Graph range={graphRange} />
             </div>
           </div>
         </div>
 
         {/* PENDING INVOICES SECTION */}
         <div className="xl:w-[45%] 2xl:w-1/3 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col">
-          <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-gray-100 pb-4">
             <div>
               <h2 className="text-xl font-extrabold text-gray-800">Pending Invoices</h2>
               <p className="text-sm text-rose-500 font-bold pt-1">

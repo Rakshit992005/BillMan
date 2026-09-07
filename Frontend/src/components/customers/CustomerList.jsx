@@ -47,7 +47,7 @@ const CustomerList = ({ refreshTrigger }) => {
   return (
     <div className="bg-white rounded-4xl border border-gray-100/60 shadow-xl shadow-gray-200/40 overflow-hidden">
       {/* Top Toolbar */}
-      <div className="px-10 py-8 flex items-center border-b border-gray-50/50">
+      <div className="px-4 sm:px-10 py-8 flex items-center border-b border-gray-50/50">
         <div className="relative flex-1 group max-w-xl">
           <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 transition-colors">
             <svg
@@ -73,8 +73,10 @@ const CustomerList = ({ refreshTrigger }) => {
         </div>
       </div>
 
-      {/* Table Headers */}
-      <div className="grid grid-cols-4 px-10 py-5 bg-gray-50/10 border-b border-gray-50">
+      <div className="overflow-x-auto">
+        <div className="min-w-[700px]">
+          {/* Table Headers */}
+          <div className="grid grid-cols-4 px-4 sm:px-10 py-5 bg-gray-50/10 border-b border-gray-50">
         <span className="text-[13px] font-black text-gray-400 uppercase tracking-widest">
           Customer Name
         </span>
@@ -109,6 +111,8 @@ const CustomerList = ({ refreshTrigger }) => {
             No customers found matching your search.
           </div>
         )}
+      </div>
+        </div>
       </div>
     </div>
   );

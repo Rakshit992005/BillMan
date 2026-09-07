@@ -44,8 +44,8 @@ const NavBar = () => {
         </Link>
       </div>
 
-      <div className="">
-        <ul className={`flex pr-5 gap-5 text-(--text-secondary) items-center`}>
+      <div className="overflow-x-auto">
+        <ul className="flex px-4 md:pr-5 gap-4 md:gap-5 text-(--text-secondary) items-center whitespace-nowrap">
           <li>
             <NavLink to="/" className={navLinkClass}>
               Home

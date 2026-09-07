@@ -124,7 +124,7 @@ const Profile = () => {
           <div className="bg-white rounded-[2rem] border border-gray-100/60 shadow-xl shadow-gray-200/40 overflow-hidden min-h-[500px]">
             {/* Profile Overview Tab */}
             {activeTab === "profile" && (
-              <div className="p-10 animate-fade-in">
+              <div className="p-4 sm:p-6 md:p-10 animate-fade-in">
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-8 border-b border-gray-100 pb-10 mb-10">
                   <div className="w-32 h-32 rounded-full bg-indigo-50 flex items-center justify-center border-4 border-white shadow-xl text-4xl font-black text-primary uppercase shrink-0 overflow-hidden">
                     {user.logoUrl ? (
@@ -206,7 +206,7 @@ const Profile = () => {
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Account Number</p>
                                 <p className="text-[14px] font-bold text-gray-800 font-mono tracking-wider">{user.bankDetails.accountNumber}</p>
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">IFSC Code</p>
                                     <p className="text-[14px] font-bold text-gray-800">{user.bankDetails.ifscCode}</p>
@@ -234,7 +234,7 @@ const Profile = () => {
 
             {/* Update Details Tab */}
             {activeTab === "update" && (
-              <div className="p-10 animate-fade-in">
+              <div className="p-4 sm:p-6 md:p-10 animate-fade-in">
                 <div className="mb-10">
                   <h2 className="text-2xl font-black text-gray-900 tracking-tight">
                     Update Details
@@ -378,7 +378,7 @@ const Profile = () => {
 
             {/* Change Password Tab */}
             {activeTab === "password" && (
-              <div className="p-10 animate-fade-in max-w-2xl">
+              <div className="p-4 sm:p-6 md:p-10 animate-fade-in max-w-2xl">
                 <div className="mb-10">
                   <h2 className="text-2xl font-black text-gray-900 tracking-tight">
                     Change Password
