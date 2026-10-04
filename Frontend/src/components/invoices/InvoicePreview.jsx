@@ -144,7 +144,7 @@ const InvoicePreview = forwardRef(
             </div>
             <div className="flex mt-1">
               <span className="w-24 font-semibold ">invoice to</span>
-              <span className="flex-1 capitalize">
+              <span className="flex-1">
                 : {customer?.name || "---------------------"}
               </span>
             </div>
