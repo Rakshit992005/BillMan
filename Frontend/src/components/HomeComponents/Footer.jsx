@@ -1,8 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center">
       <div className="w-full bg-dark text-white py-12 px-6 md:px-20">
@@ -60,6 +58,7 @@ const Footer = () => {
                   window.open(
                     "https://www.linkedin.com/in/rakshit-diwani-00809728b/",
                     "_blank",
+                    "noopener,noreferrer",
                   )
                 }
                 className="fa-brands fa-linkedin hover:text-secondary cursor-pointer transition-colors"
@@ -69,6 +68,7 @@ const Footer = () => {
                   window.open(
                     "https://github.com/Rakshit992005/BillMan",
                     "_blank",
+                    "noopener,noreferrer",
                   )
                 }
                 className="fa-brands fa-github hover:text-secondary cursor-pointer transition-colors"

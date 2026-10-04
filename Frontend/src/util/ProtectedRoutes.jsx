@@ -14,13 +14,14 @@ const ProtectedRoutes = ({ children }) => {
         });
 
         setLoading(false);
-      } catch (error) {
+      } catch {
+        localStorage.removeItem("user");
         navigate("/login");
       }
     };
 
     checkAuth();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
