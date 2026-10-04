@@ -407,7 +407,7 @@ const CreateInvoice = () => {
                 {invoiceData.items.length > 1 && (
                   <button
                     onClick={() => removeItemRow(item.id)}
-                    className="absolute -right-2 -top-2 bg-red-100 text-red-600 rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white"
+                    className="absolute -right-2 -top-2 bg-red-100 text-red-600 rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white"
                   >
                     ×
                   </button>

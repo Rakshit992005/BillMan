@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const authMiddleware = async (req, res, next) => {
     try {
@@ -8,12 +9,15 @@ const authMiddleware = async (req, res, next) => {
                 message: "Unauthorized"
             });
         }
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ["HS256"] });
+        if (!decodedToken?.id || !mongoose.Types.ObjectId.isValid(decodedToken.id)) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
         req.user = decodedToken;
         next();
-    } catch (error) {
-        return res.status(500).json({
-            message: "Internal server error while authenticating"
+    } catch {
+        return res.status(401).json({
+            message: "Unauthorized"
         });
     }
 }
