@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import RequiredMark from "../components/RequiredMark";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -107,6 +108,10 @@ const RegisterPage = () => {
       alert("Passwords do not match!");
       return;
     }
+    if (!formData.logo || !formData.stamp) {
+      alert("Company logo and stamp are required!");
+      return;
+    }
     try {
       const data = new FormData();
 
@@ -182,7 +187,7 @@ const RegisterPage = () => {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Full Name <span className="text-red-500">*</span>
+                  Full Name <RequiredMark />
                 </label>
                 <input
                   type="text"
@@ -196,7 +201,7 @@ const RegisterPage = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Email Address{" "}
+                  Email Address <RequiredMark />{" "}
                   <span className="text-xs font-normal text-red-500 ml-2 uppercase tracking-tight">
                     Please enter a valid business email
                   </span>
@@ -243,7 +248,7 @@ const RegisterPage = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Company Name <span className="text-red-500">*</span>
+                  Company Name <RequiredMark />
                 </label>
                 <input
                   type="text"
@@ -257,7 +262,7 @@ const RegisterPage = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600">
-                  Mobile Number
+                  Mobile Number <RequiredMark />
                 </label>
                 <input
                   type="tel"
@@ -266,13 +271,14 @@ const RegisterPage = () => {
                   className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                   value={formData.mobile}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
             </div>
 
             <div className="space-y-2 mb-8">
               <label className="text-sm font-bold text-gray-600">
-                Full Business Address
+                Full Business Address <RequiredMark />
               </label>
               <input
                 type="text"
@@ -281,6 +287,7 @@ const RegisterPage = () => {
                 className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                 value={formData.address}
                 onChange={handleInputChange}
+                required
               />
             </div>
             
@@ -302,7 +309,7 @@ const RegisterPage = () => {
               {/* Logo Upload */}
               <div className="space-y-3">
                 <label className="text-sm font-bold text-gray-600">
-                  Company Logo
+                  Company Logo <RequiredMark />
                 </label>
                 <div
                   onClick={() => logoInputRef.current.click()}
@@ -314,6 +321,7 @@ const RegisterPage = () => {
                     className="hidden"
                     accept="image/*"
                     onChange={(e) => handleFileChange(e, "logo")}
+                    aria-required="true"
                   />
                   <div className="flex items-start gap-4 w-full">
                     <div className="p-3 bg-white border border-gray-100 rounded-xl text-primary shadow-sm group-hover:scale-110 transition-transform">
@@ -360,7 +368,7 @@ const RegisterPage = () => {
               {/* Stamp Upload */}
               <div className="space-y-3">
                 <label className="text-sm font-bold text-gray-600">
-                  Company Stamp
+                  Company Stamp <RequiredMark />
                 </label>
                 <div
                   onClick={() => stampInputRef.current.click()}
@@ -372,6 +380,7 @@ const RegisterPage = () => {
                     className="hidden"
                     accept="image/*"
                     onChange={(e) => handleFileChange(e, "stamp")}
+                    aria-required="true"
                   />
                   <div className="flex items-start gap-4 w-full">
                     <div className="p-3 bg-white border border-gray-100 rounded-xl text-primary shadow-sm group-hover:scale-110 transition-transform">
@@ -443,7 +452,7 @@ const RegisterPage = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Bank Name <span className="text-red-500">*</span>
+                  Bank Name <RequiredMark />
                 </label>
                 <input
                   type="text"
@@ -457,7 +466,7 @@ const RegisterPage = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Account Number <span className="text-red-500">*</span>
+                  Account Number <RequiredMark />
                 </label>
                 <input
                   type="text"
@@ -474,7 +483,7 @@ const RegisterPage = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  IFSC Code <span className="text-red-500">*</span>
+                  IFSC Code <RequiredMark />
                 </label>
                 <input
                   type="text"
@@ -488,7 +497,7 @@ const RegisterPage = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Branch Name <span className="text-red-500">*</span>
+                  Branch Name <RequiredMark />
                 </label>
                 <input
                   type="text"
@@ -505,7 +514,7 @@ const RegisterPage = () => {
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                    PAN Number <span className="text-red-500">*</span>
+                    PAN Number <RequiredMark />
                   </label>
                   <input
                     type="text"
@@ -519,7 +528,7 @@ const RegisterPage = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                    UPI ID <span className="text-red-500">*</span>
+                    UPI ID <RequiredMark />
                   </label>
                   <input
                     type="text"
@@ -559,7 +568,7 @@ const RegisterPage = () => {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Create Password <span className="text-red-500">*</span>
+                  Create Password <RequiredMark />
                 </label>
                 <div className="relative">
                   <input
@@ -617,7 +626,7 @@ const RegisterPage = () => {
 
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-600 flex items-center gap-1">
-                  Confirm Password <span className="text-red-500">*</span>
+                  Confirm Password <RequiredMark />
                 </label>
                 <input
                   type="password"
@@ -670,7 +679,7 @@ const RegisterPage = () => {
                   Privacy Policy
                 </Link>
                 . I understand that my data will be stored securely for
-                invoicing purposes.
+                invoicing purposes <RequiredMark />.
               </p>
             </label>
           </div>

@@ -89,7 +89,8 @@ const CreateCustomer = ({ onCustomerCreated }) => {
               name="name"
               placeholder="e.g. John Smith"
               value={formData.name}
-              onChange={handleChange} 
+              onChange={handleChange}
+              required
             />
             <InputField
               label="Email Address"
@@ -112,6 +113,7 @@ const CreateCustomer = ({ onCustomerCreated }) => {
               placeholder="City, Country"
               value={formData.address}
               onChange={handleChange}
+              required
             />
 
           </div>

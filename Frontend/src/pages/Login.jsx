@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RequiredMark from "../components/RequiredMark";
 
 const Login = () => {
   const [focusedField, setFocusedField] = useState(null);
@@ -96,7 +97,7 @@ const Login = () => {
                   : "text-gray-400"
               }`}
             >
-              Email Address
+              Email Address <RequiredMark />
             </label>
             <div className="relative group">
               <div
@@ -148,7 +149,7 @@ const Login = () => {
                     : "text-gray-400"
                 }`}
               >
-                Password
+                Password <RequiredMark />
               </label>
               <a
                 href="#"

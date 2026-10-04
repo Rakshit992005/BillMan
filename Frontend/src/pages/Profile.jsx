@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import RequiredMark from "../components/RequiredMark";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
@@ -250,7 +251,7 @@ const Profile = () => {
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className={labelClassName}>Full Name</label>
+                      <label className={labelClassName}>Full Name <RequiredMark /></label>
                       <input
                         name="name"
                         type="text"
@@ -261,7 +262,7 @@ const Profile = () => {
                       />
                     </div>
                     <div>
-                      <label className={labelClassName}>Company Name</label>
+                      <label className={labelClassName}>Company Name <RequiredMark /></label>
                       <input
                         name="companyName"
                         type="text"
@@ -284,7 +285,7 @@ const Profile = () => {
                       </p>
                     </div>
                     <div>
-                      <label className={labelClassName}>Mobile Number</label>
+                      <label className={labelClassName}>Mobile Number <RequiredMark /></label>
                       <input
                         name="mobile"
                         type="tel"
@@ -307,7 +308,7 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className={labelClassName}>Company Address</label>
+                    <label className={labelClassName}>Company Address <RequiredMark /></label>
                     <textarea
                       name="address"
                       className={`${inputClassName} min-h-[120px] resize-none`}
@@ -335,27 +336,27 @@ const Profile = () => {
                       <h3 className="text-sm font-black text-gray-900 mb-6 tracking-tight">Banking Information</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className={labelClassName}>Bank Name</label>
+                          <label className={labelClassName}>Bank Name <RequiredMark /></label>
                           <input name="bankName" type="text" className={inputClassName} defaultValue={user.bankDetails?.bankName} placeholder="E.g. Bank of India" required />
                         </div>
                         <div>
-                          <label className={labelClassName}>Branch Name</label>
+                          <label className={labelClassName}>Branch Name <RequiredMark /></label>
                           <input name="branchName" type="text" className={inputClassName} defaultValue={user.bankDetails?.branchName} placeholder="Branch name" required />
                         </div>
                         <div>
-                          <label className={labelClassName}>Account Number</label>
+                          <label className={labelClassName}>Account Number <RequiredMark /></label>
                           <input name="accountNumber" type="text" className={inputClassName} defaultValue={user.bankDetails?.accountNumber} placeholder="Account number" required />
                         </div>
                         <div>
-                          <label className={labelClassName}>IFSC Code</label>
+                          <label className={labelClassName}>IFSC Code <RequiredMark /></label>
                           <input name="ifscCode" type="text" className={inputClassName} defaultValue={user.bankDetails?.ifscCode} placeholder="IFSC code" required />
                         </div>
                         <div>
-                          <label className={labelClassName}>PAN Number</label>
+                          <label className={labelClassName}>PAN Number <RequiredMark /></label>
                           <input name="panNumber" type="text" className={inputClassName} defaultValue={user.bankDetails?.panNumber} placeholder="PAN number" required />
                         </div>
                         <div>
-                          <label className={labelClassName}>UPI ID</label>
+                          <label className={labelClassName}>UPI ID <RequiredMark /></label>
                           <input name="upiId" type="text" className={inputClassName} defaultValue={user.bankDetails?.upiId} placeholder="UPI ID" required />
                         </div>
                       </div>
@@ -394,7 +395,7 @@ const Profile = () => {
                   onSubmit={handleChangePassword}
                 >
                   <div>
-                    <label className={labelClassName}>Current Password</label>
+                    <label className={labelClassName}>Current Password <RequiredMark /></label>
                     <input
                       name="currentPassword"
                       type="password"
@@ -404,7 +405,7 @@ const Profile = () => {
                     />
                   </div>
                   <div>
-                    <label className={labelClassName}>New Password</label>
+                    <label className={labelClassName}>New Password <RequiredMark /></label>
                     <input
                       name="newPassword"
                       type="password"
@@ -415,7 +416,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <label className={labelClassName}>
-                      Confirm New Password
+                      Confirm New Password <RequiredMark />
                     </label>
                     <input
                       name="confirmPassword"

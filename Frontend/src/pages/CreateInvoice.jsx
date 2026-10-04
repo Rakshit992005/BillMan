@@ -5,6 +5,7 @@ import InvoicePreview from "../components/invoices/InvoicePreview";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toast, Bounce } from "react-toastify";
+import RequiredMark from "../components/RequiredMark";
 
 const CreateInvoice = () => {
   const navigate = useNavigate();
@@ -345,7 +346,7 @@ const CreateInvoice = () => {
         {/* Customer Selection Card */}
         <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100/80 transition-all hover:shadow-md">
           <label className="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-3">
-            Select Customer
+            Select Customer <RequiredMark />
           </label>
           <div className="relative">
             <input
@@ -415,7 +416,7 @@ const CreateInvoice = () => {
 
                 <div className="col-span-12 lg:col-span-4">
                   <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                    Description
+                    Description <RequiredMark />
                   </label>
                   <input
                     type="text"
@@ -425,12 +426,13 @@ const CreateInvoice = () => {
                     }
                     className="w-full bg-white border border-gray-200 text-gray-800 text-sm rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 p-2.5 outline-none font-medium transition-all"
                     placeholder="Item details..."
+                    required
                   />
                 </div>
 
                 <div className="col-span-4 lg:col-span-2">
                   <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                    Qnt
+                    Qnt <RequiredMark />
                   </label>
                   <input
                     type="number"
@@ -440,12 +442,13 @@ const CreateInvoice = () => {
                       handleItemChange(item.id, "quantity", e.target.value)
                     }
                     className="w-full bg-white border border-gray-200 text-gray-800 text-sm rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 p-2.5 outline-none font-medium transition-all"
+                    required
                   />
                 </div>
 
                 <div className="col-span-4 lg:col-span-2">
                   <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                    Price
+                    Price <RequiredMark />
                   </label>
                   <input
                     type="number"
@@ -456,6 +459,7 @@ const CreateInvoice = () => {
                       handleItemChange(item.id, "price", e.target.value)
                     }
                     className="w-full bg-white border border-gray-200 text-gray-800 text-sm rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 p-2.5 outline-none font-medium transition-all"
+                    required
                   />
                 </div>
 
@@ -528,7 +532,7 @@ const CreateInvoice = () => {
           </div>
           <div className="flex-1 min-w-[120px]">
             <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-              Invoice Number
+              Invoice Number <RequiredMark />
             </label>
             <input
               type="text"
@@ -540,11 +544,12 @@ const CreateInvoice = () => {
                 }))
               }
               className="w-full bg-gray-50 border border-gray-100 text-gray-600 text-sm rounded-lg p-2.5 outline-none font-medium text-center"
+              required
             />
           </div>
           <div className="flex-1 min-w-[120px]">
             <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-              Creation Date
+              Creation Date <RequiredMark />
             </label>
             <input
               type="date"
@@ -553,6 +558,7 @@ const CreateInvoice = () => {
                 setInvoiceData((prev) => ({ ...prev, date: e.target.value }))
               }
               className="w-full bg-gray-50 border border-gray-100 text-gray-600 text-sm rounded-lg p-2.5 outline-none font-medium text-center"
+              required
             />
           </div>
         </div>

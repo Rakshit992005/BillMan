@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import RequiredMark from "./RequiredMark";
 
 const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
   const { id } = useParams();
@@ -74,7 +75,9 @@ const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-1 md:col-span-2">
-              <label className={labelClassName}>Full Name</label>
+              <label className={labelClassName}>
+                Full Name <RequiredMark />
+              </label>
               <input
                 name="name"
                 type="text"
@@ -111,7 +114,9 @@ const UpdateCustomerDetails = ({ customer, onClose, onUpdateSuccess }) => {
           </div>
 
           <div>
-            <label className={labelClassName}>Customer Address</label>
+            <label className={labelClassName}>
+              Customer Address <RequiredMark />
+            </label>
             <textarea
               name="address"
               className={`${inputClassName} min-h-[120px] resize-none`}
