@@ -1,26 +1,48 @@
 import invoiceModel from "../models/invoice.model.js";
 import mongoose from "mongoose";
 import { getAmounts } from "./customer.controller.js";
+import customerModel from "../models/customer.model.js";
+
+const allowedStatuses = ["pending", "paid", "quotation"];
+const isValidItem = (item) => item &&
+    typeof item === "object" &&
+    typeof item.description === "string" &&
+    item.description.trim().length > 0 &&
+    Number.isFinite(item.quantity) &&
+    Number.isFinite(item.price) &&
+    Number.isFinite(item.totalAmount);
 
 const createInvoice = async (req, res) => {
-    const { invoiceNumber, date, customerId, items, status } = req.body;
+    const { invoiceNumber, date, customerId, items, status } = req.body || {};
 
-    if (!invoiceNumber || !date || !customerId || !items) {
+    if (typeof invoiceNumber !== "string" || !invoiceNumber.trim() ||
+        typeof date !== "string" || Number.isNaN(Date.parse(date)) ||
+        typeof customerId !== "string" || !mongoose.Types.ObjectId.isValid(customerId) ||
+        !Array.isArray(items) || items.length === 0 || items.length > 500 ||
+        !items.every(isValidItem) ||
+        (status !== undefined && !allowedStatuses.includes(status))) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
     try {
+        const customer = await customerModel.exists({ _id: customerId, userId: req.user.id });
+        if (!customer) {
+            return res.status(404).json({ message: "Customer not found" });
+        }
 
         const ifExist = await invoiceModel.findOne({ invoiceNumber: invoiceNumber, userId: req.user.id });
 
         const totalAmount = items.reduce((acc, item) => acc + item.totalAmount, 0);
+        if (!Number.isFinite(totalAmount)) {
+            return res.status(400).json({ message: "Invalid invoice total" });
+        }
         if (ifExist) {
             const updatedInvoice = await invoiceModel.findOneAndUpdate(
                 { invoiceNumber: invoiceNumber, userId: req.user.id },
                 { items: items, totalAmount: totalAmount, status: status },
                 { returnDocument: "after" }
             );
-            await getAmounts(updatedInvoice.customerId);
+            await getAmounts(updatedInvoice.customerId, req.user.id);
             return res.status(200).json({ message: "Invoice updated successfully", updatedInvoice });
         }
 
@@ -34,13 +56,12 @@ const createInvoice = async (req, res) => {
             status,
         })
 
-        await getAmounts(newInvoice.customerId);
+        await getAmounts(newInvoice.customerId, req.user.id);
 
         return res.status(201).json({ message: "Invoice created successfully", newInvoice });
 
-    } catch (error) {
-        // console.log(error);
-        return res.status(500).json({ message: "Internal server error while creating invoice", error: error });
+    } catch {
+        return res.status(500).json({ message: "Internal server error while creating invoice" });
     }
 
 }
@@ -49,7 +70,7 @@ const createInvoice = async (req, res) => {
 const getAllInvoices = async (req, res) => {
     const { status } = req.params;
 
-    const allowedStatus = ['pending', 'paid', 'quotation', 'all'];
+    const allowedStatus = [...allowedStatuses, 'all'];
 
     if (!allowedStatus.includes(status)) {
         return res.status(400).json({ message: "Invalid status value" });
@@ -62,7 +83,7 @@ const getAllInvoices = async (req, res) => {
             filter.status = status;
         }
 
-        const invoices = await invoiceModel.find(filter).sort({ createdAt: -1 });
+        const invoices = await invoiceModel.find(filter).populate('customerId', 'name').sort({ createdAt: -1 });
 
         return res.status(200).json({
             message: "Invoices fetched successfully",
@@ -130,7 +151,7 @@ const stausPaid = async (req, res) => {
             });
         }
 
-        await getAmounts(updatedInvoice.customerId);
+        await getAmounts(updatedInvoice.customerId, req.user.id);
 
         return res.status(200).json({
             message: "Invoice status updated successfully",
@@ -161,7 +182,7 @@ const deleteByid = async (req, res) => {
             });
         }
 
-        await getAmounts(deletedInvoice.customerId);
+        await getAmounts(deletedInvoice.customerId, req.user.id);
 
         return res.status(200).json({
             message: "Invoice deleted successfully",

@@ -17,7 +17,7 @@ const CustomerListItem = ({
   };
   //   console.log(name , email , paidAmount , unpaidAmount , totalAmount)
   return (
-    <div className="grid grid-cols-4 items-center px-10 py-6 border-b border-gray-50 hover:bg-gray-50/50 transition-colors group">
+    <div className="grid grid-cols-4 items-center px-4 sm:px-10 py-6 border-b border-gray-50 hover:bg-gray-50/50 transition-colors group">
       {/* Customer Name & Email */}
       <div className="flex flex-col">
         <span className="text-[17px] font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
