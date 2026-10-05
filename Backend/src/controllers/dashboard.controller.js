@@ -70,7 +70,8 @@ const getDashboardData = async (req, res) => {
         console.error("Dashboard calculation error:", error);
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error while fetching dashboard data"
+            message: "Internal Server Error while fetching dashboard data",
+            error: error.message
         });
     }
 }
@@ -160,10 +161,11 @@ const getDashboardGraphData = async (req , res) =>{
             data: finalData
         });
 
-    } catch {
+    } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error while fetching dashboard graph data"
+            message: "Internal Server Error while fetching dashboard graph data",
+            error: error.message
         })
     }
 }

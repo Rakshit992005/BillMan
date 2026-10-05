@@ -51,12 +51,7 @@ const CustomerDetails = () => {
         { withCredentials: true },
       );
       setCustomer(response.data.customer);
-      // Enrich each invoice with the known customer name so InvoiceList can display it
-      const enrichedInvoices = response.data.invoices.map((inv) => ({
-        ...inv,
-        customerId: { _id: response.data.customer._id, name: response.data.customer.name },
-      }));
-      setInvoices(enrichedInvoices);
+      setInvoices(response.data.invoices);
     } catch (error) {
       // console.log(error);
     }
