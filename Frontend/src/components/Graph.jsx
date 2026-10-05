@@ -39,7 +39,7 @@ const Graph = ({ range }) => {
   }, [range]);
 
   return (
-    <div className="w-full h-full min-w-0">
+    <div style={{ width: "100%", height: "100%", minHeight: "350px" }}>
       <LineChart
         xAxis={[
           {
